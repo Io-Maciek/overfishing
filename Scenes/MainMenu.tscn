@@ -1,0 +1,194 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Fonts/Gluten/static/Gluten-Light.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scripts/Menu/LoadDirectoryInit.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Menu/MainPanelScript.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/Menu/PlayerInputs.cs" type="Script" id=4]
+[ext_resource path="res://Scenes/Prefabs/OptionsScreen.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Prefabs/ButtonPref.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Prefabs/PlayerCanvaChooser.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform float height = 8.0;
+uniform float frequency = 10.0;
+uniform float speed = 3.0;
+
+void vertex() {
+ VERTEX.y += height * sin((frequency * UV.x) + (speed * TIME));
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/height = 8.0
+shader_param/frequency = 10.0
+shader_param/speed = 3.0
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.27451, 0.27451, 0.27451, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 75
+corner_radius_top_right = 75
+corner_radius_bottom_right = 75
+corner_radius_bottom_left = 75
+corner_detail = 3
+shadow_color = Color( 0, 0, 0, 0.701961 )
+shadow_size = 5
+shadow_offset = Vector2( 4, 4 )
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BgColor" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.443137, 0.670588, 0.858824, 1 )
+
+[node name="TitleTextLabel" type="Label" parent="."]
+material = SubResource( 3 )
+anchor_right = 1.0
+margin_top = 64.0
+margin_right = 1.0
+margin_bottom = 192.0
+custom_colors/font_color = Color( 0.156863, 0.482353, 0.752941, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+custom_fonts/font = SubResource( 1 )
+text = "overfishing"
+align = 1
+valign = 1
+
+[node name="DirectoryLoader" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1.0
+margin_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="OptionsScreen" parent="." instance=ExtResource( 5 )]
+visible = false
+
+[node name="MainPanel" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1.0
+margin_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="BtnStartGame" parent="MainPanel" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -152.0
+margin_top = 400.0
+margin_right = 152.0
+margin_bottom = 475.0
+text = "start"
+
+[node name="BtnGoToOptions" parent="MainPanel" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -152.0
+margin_top = 500.0
+margin_right = 152.0
+margin_bottom = 575.0
+text = "options"
+
+[node name="BtnQuitGame" parent="MainPanel" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -152.5
+margin_top = 600.0
+margin_right = 152.0
+margin_bottom = 675.0
+text = "quit"
+
+[node name="PlayerChooseScreen" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1.0
+margin_bottom = 1.0
+script = ExtResource( 4 )
+
+[node name="Player4" parent="PlayerChooseScreen" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = 335.5
+margin_top = 232.0
+margin_right = 623.5
+margin_bottom = 480.0
+
+[node name="Player3" parent="PlayerChooseScreen" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = 16.5
+margin_top = 232.0
+margin_right = 304.5
+margin_bottom = 480.0
+
+[node name="Player2" parent="PlayerChooseScreen" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -303.5
+margin_top = 232.0
+margin_right = -15.5
+margin_bottom = 480.0
+
+[node name="Player1" parent="PlayerChooseScreen" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -624.5
+margin_top = 232.0
+margin_right = -336.5
+margin_bottom = 480.0
+
+[node name="BtnStartGame" parent="PlayerChooseScreen" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -152.0
+margin_top = 500.0
+margin_right = 152.0
+margin_bottom = 575.0
+custom_styles/disabled = SubResource( 4 )
+disabled = true
+text = "start"
+
+[node name="BtnBackToMenu" parent="PlayerChooseScreen" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -152.0
+margin_top = 600.0
+margin_right = 152.0
+margin_bottom = 675.0
+text = "back"
+
+[connection signal="pressed" from="MainPanel/BtnStartGame" to="MainPanel" method="_on_BtnStartGame_pressed"]
+[connection signal="pressed" from="MainPanel/BtnGoToOptions" to="MainPanel" method="_on_BtnGoToOptions_pressed"]
+[connection signal="pressed" from="MainPanel/BtnQuitGame" to="MainPanel" method="_on_BtnQuitGame_pressed"]
+[connection signal="pressed" from="PlayerChooseScreen/BtnStartGame" to="PlayerChooseScreen" method="_on_BtnStartGame_pressed"]
+[connection signal="pressed" from="PlayerChooseScreen/BtnBackToMenu" to="PlayerChooseScreen" method="_on_BtnBackToMenu_pressed"]
