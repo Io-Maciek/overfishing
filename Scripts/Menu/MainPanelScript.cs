@@ -10,7 +10,8 @@ public class MainPanelScript : Control
 
 	public override void _Ready()
 	{
-		playerChooseScreen = (PlayerInputs)GetParent().GetNode("PlayerChooseScreen");
+        Input.MouseMode = Input.MouseModeEnum.Confined;
+        playerChooseScreen = (PlayerInputs)GetParent().GetNode("PlayerChooseScreen");
 		playerChooseScreen.Visible = false;
 
 		optionScreen = (OptionsScreenScript)GetParent().GetNode("OptionsScreen");

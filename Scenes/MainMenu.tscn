@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Fonts/Gluten/static/Gluten-Light.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Menu/LoadDirectoryInit.cs" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/Prefabs/OptionsScreen.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Prefabs/ButtonPref.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Prefabs/PlayerCanvaChooser.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scripts/Menu/FishLoaderScript.cs" type="Script" id=8]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -186,6 +187,9 @@ margin_top = 600.0
 margin_right = 152.0
 margin_bottom = 675.0
 text = "back"
+
+[node name="FishLoader" type="Node" parent="PlayerChooseScreen"]
+script = ExtResource( 8 )
 
 [connection signal="pressed" from="MainPanel/BtnStartGame" to="MainPanel" method="_on_BtnStartGame_pressed"]
 [connection signal="pressed" from="MainPanel/BtnGoToOptions" to="MainPanel" method="_on_BtnGoToOptions_pressed"]

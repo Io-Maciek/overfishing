@@ -19,7 +19,7 @@ public class PlayerPanel : Control
         }
         else
         {
-            PlayerName.Text = player.AssignedDevice;
+            PlayerName.Text = player.AssignedDevice+"\n"+player.Fish.Name;
         }
     }
 }
