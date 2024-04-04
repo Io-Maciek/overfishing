@@ -5,6 +5,7 @@ using System;
 public class PlayerPanel : Control
 {
 	Label PlayerName;
+	Label Description;
 	public Control Arrows;
 	TextureRect fishTexture;
 
@@ -12,12 +13,15 @@ public class PlayerPanel : Control
 	{
 		PlayerName = (Label)GetNode("PlayerName");
 		PlayerName.Text = "";
-        Arrows = (Control)GetNode("Arrows");
+		Arrows = (Control)GetNode("Arrows");
 		Arrows.Visible = false;
 
-        fishTexture = GetNode("FishTexture") as TextureRect;
+		Description = (Label)GetNode("description");
+		Description.Text = "";
+
+		fishTexture = GetNode("FishTexture") as TextureRect;
 		fishTexture.Texture = null;
-    }
+	}
 
 	public void SetPlayer(PlayerUIModel player = null)
 	{
@@ -25,11 +29,13 @@ public class PlayerPanel : Control
 		{
 			PlayerName.Text = string.Empty;
 			fishTexture.Texture = null;
-        }
+			Description.Text = "";
+		}
 		else
 		{
 			PlayerName.Text = player.AssignedDevice+"\n"+player.Fish.Name;
 			fishTexture.Texture = ResourceLoader.Load(player.Fish.SpriteFullPath()) as Texture;
-        }
+			Description.Text = player.Fish.ActionDescription;
+		}
 	}
 }

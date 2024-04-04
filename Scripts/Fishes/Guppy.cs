@@ -12,7 +12,7 @@ namespace Overfishing.Scripts.Fishes
     {
         public override string SpriteName => "guppy";
 
-        public override string ActionDescription => "NA";
+        public override string ActionDescription => "Inverts other players controls.";
 
 
         string _name = "Guppy";
@@ -20,7 +20,12 @@ namespace Overfishing.Scripts.Fishes
 
         public override void Ability(Node2D GameSceneRoot)
         {
-            Debug.WriteLine("AHA\t"+GameSceneRoot.Name);
+            Debug.WriteLine("===GUPPY ABILITY:");
+
+            var you = this.GetYourself(GameSceneRoot);
+            var others = this.GetOthers(GameSceneRoot);
+
+            Debug.WriteLine("===END");
         }
     }
 }

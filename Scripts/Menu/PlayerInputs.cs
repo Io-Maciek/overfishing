@@ -149,7 +149,7 @@ public class PlayerInputs : Control
             {
                 _deletePlayer(changedPlayer);
             }
-            else // add player
+            else if(Players.Where(x=>x != null).Count() < 4) // add player
             {
                 _addPlayer(deviceName);
             }

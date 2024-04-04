@@ -11,7 +11,7 @@ namespace Overfishing.Scripts.Fishes
     {
         public override string SpriteName => "lanternfish";
 
-        public override string ActionDescription => "Turns off the light!";
+        public override string ActionDescription => "Turns of the light for X seconds.";
 
 
         string _name = "Lanternfish";

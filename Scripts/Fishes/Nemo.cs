@@ -11,7 +11,7 @@ namespace Overfishing.Scripts.Fishes
     {
         public override string SpriteName => "nemo";
 
-        public override string ActionDescription => "Hides all players";
+        public override string ActionDescription => "Hides other players for X seconds.";
 
 
         string _name = "Nemo";

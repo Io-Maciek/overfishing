@@ -7,7 +7,7 @@ using System.Diagnostics;
 public class PlayerScript : KinematicBody2D
 {
 	protected Node2D playerSprite;
-	AFish fish;
+	public AFish fish;
 	string device;
 
 	public float MovementSpeed = 200.0f;

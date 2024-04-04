@@ -11,7 +11,7 @@ namespace Overfishing.Scripts.Fishes
     {
         public override string SpriteName => "camo";
 
-        public override string ActionDescription => "Can't be hooked via fishing rod";
+        public override string ActionDescription => "Can't be hooked on fishing rod for X seconds.";
 
 
         string _name = "Camo";

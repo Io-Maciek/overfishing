@@ -22,6 +22,7 @@ public class PlayersInit : Node
             var playermodel = ResourceLoader.Load<PackedScene>(GameStaticInfo._PLAYERS[i].Fish.SceneFullPath());
 
             var main_node = (Node2D)playermodel.Instance();
+            main_node.Name = "Player" + i;
             var _player_script = main_node.GetNode("Player") as PlayerScript;
             _player_script.SetPlayer(GameStaticInfo._PLAYERS[i]);
             _player_script.Position = playerPositions[i];
