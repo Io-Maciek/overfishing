@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Fonts/Schoolbell/Schoolbell-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Menu/PlayerPanel.cs" type="Script" id=2]
+[ext_resource path="res://Images/Fishies/alpha_fish.png" type="Texture" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -37,5 +38,41 @@ anchor_right = 1.0
 margin_right = 1.0
 margin_bottom = 64.0
 custom_fonts/font = SubResource( 1 )
+text = "placeholder"
 align = 1
 valign = 1
+
+[node name="Arrows" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+
+[node name="Right" type="Label" parent="Arrows"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -56.0
+custom_fonts/font = SubResource( 1 )
+text = ">"
+align = 1
+valign = 1
+
+[node name="Left" type="Label" parent="Arrows"]
+anchor_bottom = 1.0
+margin_right = 56.0
+custom_fonts/font = SubResource( 1 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="FishTexture" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 48.0
+margin_top = 120.0
+margin_right = -41.0
+margin_bottom = -41.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6

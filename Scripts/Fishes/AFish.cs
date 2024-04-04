@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,23 @@ namespace Overfishing.Scripts.Fishes
         public abstract string SpriteName { get;  }
         public abstract string ActionDescription { get;  }
 
-        public abstract void Ability();
+        public abstract void Ability(Node2D GameSceneRoot);
 
-        public string SpriteFullPath()
+        public virtual string SpriteFullPath()
         {
-            string sprite_name = SpriteName.EndsWith(".png") ? SpriteName : $"{SpriteName}.png";
+            string sprite_name = $"{SpriteName}.png";
             return $"res://Images/Fishies/{sprite_name}";
+        }
+
+        public virtual string SceneFullPath()
+        {
+            string scene_name = $"{SpriteName}.tscn";
+            return $"res://Scenes/Prefabs/Fishes/{scene_name}";
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

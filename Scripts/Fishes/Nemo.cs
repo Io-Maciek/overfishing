@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Overfishing.Scripts.Fishes
         string _name = "Nemo";
         public override string Name { get => _name; set => _name = value; }
 
-        public override void Ability()
+        public override void Ability(Node2D GameSceneRoot)
         {
         }
     }

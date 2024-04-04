@@ -11,9 +11,17 @@ extents = Vector2( 649, 25 )
 
 [node name="Scene" type="Node2D"]
 
-[node name="Pause" parent="." instance=ExtResource( 2 )]
-margin_left = 1.0
-margin_right = 1.0
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause" parent="CanvasLayer" instance=ExtResource( 2 )]
+anchor_right = 0.987
+anchor_bottom = 1.0
+margin_right = 0.639893
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource( 1 )

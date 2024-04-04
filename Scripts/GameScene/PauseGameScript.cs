@@ -9,6 +9,7 @@ public class PauseGameScript : Control
 	string pauseMaster = null;
 	
 	WorldEnvironment _env;
+	Button BtnBackToMenu;
 
 	public override void _Ready()
 	{
@@ -16,8 +17,12 @@ public class PauseGameScript : Control
 		inputListeners = new string[GameStaticInfo._PLAYERS.Count];
 		_env = (WorldEnvironment)GetNode("WorldEnvironment");
 		_env.Environment.DofBlurNearEnabled = false;
-		
-		for (int i = 0; i < GameStaticInfo._PLAYERS.Count; i++)
+
+		BtnBackToMenu = GetNode("BtnBackToMenu") as Button;
+        BtnBackToMenu.Visible = false;
+
+
+        for (int i = 0; i < GameStaticInfo._PLAYERS.Count; i++)
 		{
 			inputListeners[i] = $"{GameStaticInfo._PLAYERS[i].AssignedDevice.ToLower()}_pause";
 		}
@@ -52,8 +57,9 @@ public class PauseGameScript : Control
 	{
 		Debug.WriteLine("UNPAUSED BY: " + pauseMaster);
 		_env.Environment.DofBlurNearEnabled = false;
+        BtnBackToMenu.Visible = false;
 
-		pauseMaster = null;
+        pauseMaster = null;
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 		GetTree().Paused = false;
 	}
@@ -62,15 +68,18 @@ public class PauseGameScript : Control
 	{
 		Debug.WriteLine("PAUSED BY: " + actionKey);
 		_env.Environment.DofBlurNearEnabled = true;
+		BtnBackToMenu.Visible = true;
 
-		pauseMaster = actionKey;
-		Input.MouseMode = Input.MouseModeEnum.Confined;
+        pauseMaster = actionKey;
+		Input.MouseMode = Input.MouseModeEnum.Visible;
 		GetTree().Paused = true;
 	}
 
 	private void _on_BtnBackToMenu_pressed()
 	{
 		GameStaticInfo._PLAYERS = null;
+		GetTree().Paused = false;
+		Input.MouseMode = Input.MouseModeEnum.Visible;
 
 		GetTree().ChangeScene("res://Scenes/MainMenu.tscn");
 	}
