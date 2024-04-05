@@ -42,9 +42,6 @@ namespace Overfishing.Scripts.Fishes
             you.abilityTimer.WaitTime = AbilityUseTime;
             you.abilityTimer.OneShot = true;
             you.abilityTimer.Start();
-            
-
-            Debug.WriteLine("===END");
         }
     }
 }

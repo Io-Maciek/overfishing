@@ -75,6 +75,11 @@ public class PlayersInit : Node
         AbilitiesExceptions.Remove("Guppy");
     }
 
+    private void _pufferfish_ability_over()
+    {
+        AbilitiesExceptions.Remove("PufferFish");
+    }
+
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     //  public override void _Process(float delta)
     //  {

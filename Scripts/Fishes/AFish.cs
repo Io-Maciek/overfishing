@@ -40,7 +40,7 @@ namespace Overfishing.Scripts.Fishes
         private PlayerScript You = null;
         private List<PlayerScript> Others = null;
 
-        protected PlayerScript GetYourself(Node2D RootNode)
+        public PlayerScript GetYourself(Node2D RootNode)
         {
             if(Others == null)
             {
@@ -88,7 +88,8 @@ namespace Overfishing.Scripts.Fishes
 
             return u;
         }
-        protected List<PlayerScript> GetOthers(Node2D RootNode)
+
+        public List<PlayerScript> GetOthers(Node2D RootNode)
         {
             GetYourself(RootNode);
             return Others;

@@ -33,6 +33,7 @@ internal class FishLoaderScript : Node
         {
             new Guppy(),
             new Nemo(),
+            new PufferFish(),
             new Lanternfish(),
             new Camo(),
             new AlphaFish(),

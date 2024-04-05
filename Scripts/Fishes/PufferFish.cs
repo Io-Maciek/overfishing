@@ -12,8 +12,8 @@ namespace Overfishing.Scripts.Fishes
     {
         public override string SpriteName => "puffer";
         public override ulong AbilityCooldown => 60_000;
-        public override float AbilityUseTime => 10.0f;
-        public override string ActionDescription => $"Stop other players for {Mathf.RoundToInt(AbilityUseTime)} seconds.";
+        public override float AbilityUseTime => 5.0f;
+        public override string ActionDescription => $"Stops other players for {Mathf.RoundToInt(AbilityUseTime)} seconds.";
 
 
         string _name = "PufferFish";
@@ -31,12 +31,12 @@ namespace Overfishing.Scripts.Fishes
 
             Debug.WriteLine("===PUFFER ABILITY:");
 
-            var you = (PlayerScriptPufferfish)this.GetYourself(GameSceneRoot);
+            var you = (PlayerScriptPufferFish)this.GetYourself(GameSceneRoot);
             var others = this.GetOthers(GameSceneRoot);
 
             you.MovementServer.AbilitiesExceptions.Add(
                 Name,
-                ((input)=>-1*input, others.Select(x => x.device).ToList())
+                ((input)=>Vector2.Zero, others.Select(x => x.device).ToList())
             );
 
             you.abilityTimer.WaitTime = AbilityUseTime;
