@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Overfishing.Scripts.Fishes
 {
-    public class Guppy : AFish
+    public class PufferFish : AFish
     {
-        public override string SpriteName => "guppy";
+        public override string SpriteName => "puffer";
         public override ulong AbilityCooldown => 60_000;
         public override float AbilityUseTime => 10.0f;
-        public override string ActionDescription => $"Inverts other players controls for {Mathf.RoundToInt(AbilityUseTime)} seconds.";
+        public override string ActionDescription => $"Stop other players for {Mathf.RoundToInt(AbilityUseTime)} seconds.";
 
 
-        string _name = "Guppy";
+        string _name = "PufferFish";
         public override string Name { get => _name; set => _name = value; }
 
 
@@ -29,9 +29,9 @@ namespace Overfishing.Scripts.Fishes
                 return;
             TimerOfNextAbility = Time.GetTicksMsec() + AbilityCooldown;
 
-            Debug.WriteLine("===GUPPY ABILITY:");
+            Debug.WriteLine("===PUFFER ABILITY:");
 
-            var you = (PlayerScriptGuppy)this.GetYourself(GameSceneRoot);
+            var you = (PlayerScriptPufferfish)this.GetYourself(GameSceneRoot);
             var others = this.GetOthers(GameSceneRoot);
 
             you.MovementServer.AbilitiesExceptions.Add(
@@ -42,9 +42,6 @@ namespace Overfishing.Scripts.Fishes
             you.abilityTimer.WaitTime = AbilityUseTime;
             you.abilityTimer.OneShot = true;
             you.abilityTimer.Start();
-            
-
-            Debug.WriteLine("===END");
         }
     }
 }

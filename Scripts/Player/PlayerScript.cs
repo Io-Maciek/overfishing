@@ -8,13 +8,13 @@ public class PlayerScript : KinematicBody2D
 {
 	protected Node2D playerSprite;
 	public AFish fish;
-	string device;
+	public string device;
 
-	public float MovementSpeed = 200.0f;
 	bool horizontalVectorLeft = true;
 
 	Vector2 _sprite_scale;
 	public Node2D scene_root { get; set; }
+	public PlayersInit MovementServer;
 
 	public override void _Ready()
 	{
@@ -25,15 +25,15 @@ public class PlayerScript : KinematicBody2D
 
 
 	// this script acts as '_Ready'
-	public virtual void SetPlayer(PlayerUIModel player)
+	public virtual void SetPlayer(PlayerUIModel player, PlayersInit movementServer)
 	{
 		fish = player.Fish;
 		device = player.AssignedDevice.ToLower();
 		//var texture = ResourceLoader.Load(fish.SpriteFullPath()) as Texture;
 		playerSprite = (Node2D)GetNode("Sprite");
-		//playerSprite.Texture = texture; // method _Ready does not run before this for some reason
-
-		_sprite_scale = playerSprite.Scale;
+        //playerSprite.Texture = texture; // method _Ready does not run before this for some reason
+        MovementServer = movementServer;
+        _sprite_scale = playerSprite.Scale;
 	}
 
 	public override void _Process(float delta)
@@ -58,8 +58,9 @@ public class PlayerScript : KinematicBody2D
 			return;
 
 		// get movement vetor
-		Vector2 movement = Input.GetVector($"{device}_left", $"{device}_right", $"{device}_up", $"{device}_down")
-			* MovementSpeed;
+		if (MovementServer == null)
+			return;
+		Vector2 movement = MovementServer.MovementServer(device);
 
 
 		// return if player did not moved

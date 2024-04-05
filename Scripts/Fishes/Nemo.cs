@@ -17,6 +17,10 @@ namespace Overfishing.Scripts.Fishes
         string _name = "Nemo";
         public override string Name { get => _name; set => _name = value; }
 
+        public override ulong AbilityCooldown => throw new NotImplementedException();
+
+        public override float AbilityUseTime => throw new NotImplementedException();
+
         public override void Ability(Node2D GameSceneRoot)
         {
         }

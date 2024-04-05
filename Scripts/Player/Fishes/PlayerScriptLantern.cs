@@ -6,9 +6,9 @@ using System.Diagnostics;
 
 public class PlayerScriptLantern : PlayerScript
 {
-    public override void SetPlayer(PlayerUIModel player)
+    public override void SetPlayer(PlayerUIModel player, PlayersInit movementServer)
     {
-        base.SetPlayer(player);
+        base.SetPlayer(player, movementServer);
 
 		(playerSprite.GetNode("AnimationPlayer") as AnimationPlayer).Play("idle");
     }

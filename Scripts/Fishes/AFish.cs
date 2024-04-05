@@ -14,6 +14,8 @@ namespace Overfishing.Scripts.Fishes
         public abstract string Name { get; set; }
         public abstract string SpriteName { get;  }
         public abstract string ActionDescription { get;  }
+        public abstract ulong AbilityCooldown { get; }
+        public abstract float AbilityUseTime { get; }
 
         public abstract void Ability(Node2D GameSceneRoot);
 
@@ -91,6 +93,7 @@ namespace Overfishing.Scripts.Fishes
             GetYourself(RootNode);
             return Others;
         }
+
 
 
     }
