@@ -14,9 +14,9 @@ public class PlayerScript : KinematicBody2D
 	bool horizontalVectorLeft = true;
 
 	Vector2 _sprite_scale;
-    public Node2D scene_root { get; set; }
+	public Node2D scene_root { get; set; }
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 	}
 
@@ -34,12 +34,12 @@ public class PlayerScript : KinematicBody2D
 		//playerSprite.Texture = texture; // method _Ready does not run before this for some reason
 
 		_sprite_scale = playerSprite.Scale;
-    }
+	}
 
-    public override void _Process(float delta)
-    {
-        if (fish == null)
-            return;
+	public override void _Process(float delta)
+	{
+		if (fish == null)
+			return;
 
 		if (scene_root == null)
 			return;
@@ -49,9 +49,9 @@ public class PlayerScript : KinematicBody2D
 			//Debug.WriteLine($"{fish}\t\t{GetTree().Root.GetNode("Scene").Name}");
 			fish.Ability(scene_root);
 		}
-    }
+	}
 
-    public override void _PhysicsProcess(float delta)
+	public override void _PhysicsProcess(float delta)
 	{
 		// return if fish was not set yet
 		if (fish == null)

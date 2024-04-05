@@ -24,6 +24,8 @@ window/stretch/aspect="keep"
 [global]
 
 resol=false
+pause=false
+shader=false
 
 [gui]
 
