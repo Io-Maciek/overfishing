@@ -12,9 +12,9 @@ namespace Overfishing.Scripts.Fishes
     {
         public override string SpriteName => "lanternfish";
 
-        public override ulong AbilityCooldown => (ulong)Mathf.RoundToInt(AbilityUseTime);//60_000;
+        public override ulong AbilityCooldown => 60_000;//(ulong)Mathf.RoundToInt(AbilityUseTime);//60_000;
 
-        public override float AbilityUseTime => 10.0f;
+        public override float AbilityUseTime => 5.0f;
         public override string ActionDescription => $"Turns of the light for {Mathf.RoundToInt(AbilityUseTime)} seconds.";
 
 
