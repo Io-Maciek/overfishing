@@ -31,9 +31,9 @@ public class PlayerScript : KinematicBody2D
 		device = player.AssignedDevice.ToLower();
 		//var texture = ResourceLoader.Load(fish.SpriteFullPath()) as Texture;
 		playerSprite = (Node2D)GetNode("Sprite");
-        //playerSprite.Texture = texture; // method _Ready does not run before this for some reason
-        MovementServer = movementServer;
-        _sprite_scale = playerSprite.Scale;
+		//playerSprite.Texture = texture; // method _Ready does not run before this for some reason
+		MovementServer = movementServer;
+		_sprite_scale = playerSprite.Scale;
 	}
 
 	public override void _Process(float delta)

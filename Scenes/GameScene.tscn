@@ -270,24 +270,31 @@ vec3 water(vec2 uv, vec3 cdir, float iTime)
 }
 
 
+uniform bool ignore_light = true;
 
 void fragment() {
 
 	vec2 uv = UV;
-
    COLOR.rgb = vec3(water(uv * tile, vec3(0,1,0), TIME * distortion_speed));
-
+	
+	if(!ignore_light){
+		if(AT_LIGHT_PASS){
+			COLOR.a *= 1.0f;
+		}else{
+			COLOR.a *= 0.0f;
+		}
+	}
 }"
 
 [sub_resource type="ShaderMaterial" id=4]
-render_priority = 10
 shader = SubResource( 3 )
 shader_param/WATER_COL = Color( 0.04, 0.38, 0.88, 1 )
 shader_param/WATER2_COL = Color( 0.04, 0.35, 0.78, 1 )
 shader_param/FOAM_COL = Color( 0.8125, 0.9609, 0.9648, 1 )
 shader_param/distortion_speed = 2.0
-shader_param/tile = Vector2( 25, 25 )
-shader_param/wave_speed = 10.0
+shader_param/tile = Vector2( 5, 5 )
+shader_param/wave_speed = 1.5
+shader_param/ignore_light = true
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 29, 361 )
@@ -296,11 +303,15 @@ extents = Vector2( 29, 361 )
 extents = Vector2( 649, 25 )
 
 [node name="Scene" type="Node2D"]
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="SceneLoader" type="Node" parent="."]
+script = ExtResource( 1 )
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
-layer = -10
+layer = 0
 
 [node name="BackgroundWater" type="TextureRect" parent="CanvasLayer2"]
 pause_mode = 1
@@ -316,19 +327,9 @@ __meta__ = {
 }
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 99
 
-[node name="Pause" parent="CanvasLayer" instance=ExtResource( 2 )]
-anchor_right = 0.987
-anchor_bottom = 1.0
-margin_right = 0.639893
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="SceneLoader" type="Node" parent="."]
-script = ExtResource( 1 )
-
-[node name="ColorRect4" type="ColorRect" parent="."]
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer"]
 margin_left = 1232.0
 margin_right = 1280.0
 margin_bottom = 720.0
@@ -336,44 +337,55 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="StaticBody2D" type="StaticBody2D" parent="ColorRect4"]
+[node name="StaticBody2D" type="StaticBody2D" parent="CanvasLayer/ColorRect4"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect4/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/ColorRect4/StaticBody2D"]
 position = Vector2( 19, 351 )
 shape = SubResource( 1 )
 
-[node name="ColorRect3" type="ColorRect" parent="."]
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer"]
 anchor_bottom = 1.0
 margin_right = 48.0
 margin_bottom = 720.0
 
-[node name="StaticBody2D" type="StaticBody2D" parent="ColorRect3"]
+[node name="StaticBody2D" type="StaticBody2D" parent="CanvasLayer/ColorRect3"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect3/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/ColorRect3/StaticBody2D"]
 position = Vector2( 19, 351 )
 shape = SubResource( 1 )
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 679.0
-margin_right = 1280.0
-margin_bottom = 719.0
-
-[node name="StaticBody2D" type="StaticBody2D" parent="ColorRect2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect2/StaticBody2D"]
-position = Vector2( 639, 15 )
-shape = SubResource( 2 )
-
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchor_right = 1.0
 margin_right = 1280.0
 margin_bottom = 40.0
 
-[node name="StaticBody2D" type="StaticBody2D" parent="ColorRect"]
+[node name="StaticBody2D" type="StaticBody2D" parent="CanvasLayer/ColorRect"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/ColorRect/StaticBody2D"]
 position = Vector2( 639, 15 )
 shape = SubResource( 2 )
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -41.0
+margin_right = 1280.0
+margin_bottom = -1.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="CanvasLayer/ColorRect2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/ColorRect2/StaticBody2D"]
+position = Vector2( 639, 15 )
+shape = SubResource( 2 )
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="Pause" parent="CanvasLayer3" instance=ExtResource( 2 )]
+anchor_right = 0.987
+anchor_bottom = 1.0
+margin_right = 0.639893
+__meta__ = {
+"_edit_use_anchors_": true
+}

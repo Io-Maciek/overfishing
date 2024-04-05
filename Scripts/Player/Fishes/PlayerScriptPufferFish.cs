@@ -9,11 +9,6 @@ public class PlayerScriptPufferFish : PlayerScript
     //public bool AbilityIsOn = false;
     public Timer abilityTimer;
 
-    public override void _Process(float delta)
-    {
-        base._Process(delta);
-    }
-
     public override void SetPlayer(PlayerUIModel player, PlayersInit movementServer)
     {
         base.SetPlayer(player, movementServer);

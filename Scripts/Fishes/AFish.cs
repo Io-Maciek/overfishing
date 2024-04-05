@@ -65,7 +65,7 @@ namespace Overfishing.Scripts.Fishes
 
             for (int i = 0; i < GameStaticInfo._PLAYERS.Count; i++)
             {
-                var root = RootNode.GetNode("Player"+i);
+                var root = RootNode.GetNode("CanvasLayer").GetNode("Player"+i);
                 if (root == null)
                     continue;
 

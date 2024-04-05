@@ -1,6 +1,7 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,18 +12,36 @@ namespace Overfishing.Scripts.Fishes
     {
         public override string SpriteName => "lanternfish";
 
-        public override string ActionDescription => "Turns of the light for X seconds.";
+        public override ulong AbilityCooldown => (ulong)Mathf.RoundToInt(AbilityUseTime);//60_000;
+
+        public override float AbilityUseTime => 10.0f;
+        public override string ActionDescription => $"Turns of the light for {Mathf.RoundToInt(AbilityUseTime)} seconds.";
 
 
         string _name = "Lanternfish";
         public override string Name { get => _name; set => _name = value; }
 
-        public override ulong AbilityCooldown => throw new NotImplementedException();
+        private ulong TimerOfNextAbility = 0;
 
-        public override float AbilityUseTime => throw new NotImplementedException();
 
         public override void Ability(Node2D GameSceneRoot)
         {
+            if (Time.GetTicksMsec() < TimerOfNextAbility)
+                return;
+            TimerOfNextAbility = Time.GetTicksMsec() + AbilityCooldown;
+
+            Debug.WriteLine("===LANTERNFISH ABILITY");
+            var you = (PlayerScriptLantern)GetYourself(GameSceneRoot);
+            foreach(var others in GetOthers(GameSceneRoot))
+            {
+                (((Sprite)others.GetNode("Sprite")).Material as CanvasItemMaterial).LightMode = CanvasItemMaterial.LightModeEnum.LightOnly;
+            }
+
+            you.StartAbility();
+
+            you.abilityTimer.WaitTime = AbilityUseTime;
+            you.abilityTimer.OneShot = true;
+            you.abilityTimer.Start();
         }
 
         public override string SpriteFullPath()
