@@ -23,6 +23,20 @@ namespace Overfishing.Scripts.Fishes
 
         private ulong TimerOfNextAbility = 0;
 
+        public virtual string Sprite2FullPath()
+        {
+            return "res://Images/Fishies/puffer2.png";
+        }
+
+        Texture SpriteAbilityTexture;
+        public Texture SpriteTexture;
+
+        public PufferFish()
+        {
+            SpriteAbilityTexture = ResourceLoader.Load(Sprite2FullPath()) as Texture;
+            SpriteTexture = ResourceLoader.Load(SpriteFullPath()) as Texture;
+        }
+
         public override void Ability(Node2D GameSceneRoot)
         {
             if (Time.GetTicksMsec() < TimerOfNextAbility)
@@ -33,6 +47,8 @@ namespace Overfishing.Scripts.Fishes
 
             var you = (PlayerScriptPufferFish)this.GetYourself(GameSceneRoot);
             var others = this.GetOthers(GameSceneRoot);
+
+            (you.GetNode("Sprite") as Sprite).Texture = SpriteAbilityTexture;
 
             you.MovementServer.AbilitiesExceptions.Add(
                 Name,

@@ -13,7 +13,13 @@ public class PlayerScriptPufferFish : PlayerScript
     {
         base.SetPlayer(player, movementServer);
         abilityTimer = (Timer)GetNode("Timer");
-        abilityTimer.Connect("timeout", movementServer, "_pufferfish_ability_over");
+        abilityTimer.Connect("timeout", this, "_pufferfish_ability_over");
     }
 
+
+    private void _pufferfish_ability_over()
+    {
+        MovementServer.AbilitiesExceptions.Remove("PufferFish");
+        (GetNode("Sprite") as Sprite).Texture = (fish as PufferFish).SpriteTexture;
+    }
 }

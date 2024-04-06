@@ -1,8 +1,16 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/GameScene/PlayersInit.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/PauseScene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Images/light_image.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/GameScene/TimeManager.cs" type="Script" id=4]
+[ext_resource path="res://Fonts/Schoolbell/Schoolbell-Regular.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="DynamicFont" id=5]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
 
 [sub_resource type="Shader" id=3]
 code = "shader_type canvas_item;
@@ -273,17 +281,16 @@ vec3 water(vec2 uv, vec3 cdir, float iTime)
 uniform bool ignore_light = true;
 
 void fragment() {
-
-	vec2 uv = UV;
-   COLOR.rgb = vec3(water(uv * tile, vec3(0,1,0), TIME * distortion_speed));
-	
-	if(!ignore_light){
-		if(AT_LIGHT_PASS){
-			COLOR.a *= 1.0f;
-		}else{
-			COLOR.a *= 0.0f;
+		vec2 uv = UV;
+	   COLOR.rgb = vec3(water(uv * tile, vec3(0,1,0), TIME * distortion_speed));
+		
+		if(!ignore_light){
+			if(AT_LIGHT_PASS){
+				COLOR.a *= 1.0f;
+			}else{
+				COLOR.a *= 0.0f;
+			}
 		}
-	}
 }"
 
 [sub_resource type="ShaderMaterial" id=4]
@@ -291,9 +298,9 @@ shader = SubResource( 3 )
 shader_param/WATER_COL = Color( 0.04, 0.38, 0.88, 1 )
 shader_param/WATER2_COL = Color( 0.04, 0.35, 0.78, 1 )
 shader_param/FOAM_COL = Color( 0.8125, 0.9609, 0.9648, 1 )
-shader_param/distortion_speed = 2.0
-shader_param/tile = Vector2( 5, 5 )
-shader_param/wave_speed = 1.5
+shader_param/distortion_speed = 1.0
+shader_param/tile = Vector2( 10, 10 )
+shader_param/wave_speed = 4.0
 shader_param/ignore_light = true
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -306,6 +313,27 @@ extents = Vector2( 649, 25 )
 __meta__ = {
 "_edit_vertical_guides_": [  ]
 }
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="Pause" parent="CanvasLayer3" instance=ExtResource( 2 )]
+anchor_right = 0.987
+anchor_bottom = 1.0
+margin_right = 0.639893
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer3"]
+anchor_right = 1.0
+margin_left = 48.0
+margin_top = -8.0
+margin_right = -48.0
+margin_bottom = 61.0
+custom_fonts/font = SubResource( 5 )
+text = "00:00"
+script = ExtResource( 4 )
 
 [node name="SceneLoader" type="Node" parent="."]
 script = ExtResource( 1 )
@@ -378,14 +406,3 @@ margin_bottom = -1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/ColorRect2/StaticBody2D"]
 position = Vector2( 639, 15 )
 shape = SubResource( 2 )
-
-[node name="CanvasLayer3" type="CanvasLayer" parent="."]
-layer = 128
-
-[node name="Pause" parent="CanvasLayer3" instance=ExtResource( 2 )]
-anchor_right = 0.987
-anchor_bottom = 1.0
-margin_right = 0.639893
-__meta__ = {
-"_edit_use_anchors_": true
-}

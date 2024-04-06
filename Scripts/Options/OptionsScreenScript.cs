@@ -13,8 +13,8 @@ public class OptionsScreenScript : Control
 		PreviousScreen = this;
 		ToggleFullscreen = GetNode("FullScreenToggle").GetNode("Label").GetNode("CheckButton") as Button;
 
-        _setFromConfig();
-    }
+		_setFromConfig();
+	}
 
 	private void _on_BtnBackToMenu_pressed()
 	{
@@ -28,7 +28,7 @@ public class OptionsScreenScript : Control
 	public void ShowOptions(Control previousScreen)
 	{
 		_setFromConfig();
-        PreviousScreen = previousScreen;
+		PreviousScreen = previousScreen;
 		Visible = true;
 		PreviousScreen.Visible = false;
 	}
@@ -38,14 +38,14 @@ public class OptionsScreenScript : Control
 		ToggleFullscreen.Pressed = OS.WindowFullscreen;
 		GameStaticInfo._CONFIG_INSTANCE.IsFullScreen = OS.WindowFullscreen;
 		GameStaticInfo._CONFIG_INSTANCE.Save();
-    }
+	}
 
-    private void _on_fullscreen_toggled(bool button_pressed)
-    {
+	private void _on_fullscreen_toggled(bool button_pressed)
+	{
 		OS.WindowFullscreen = button_pressed;
-        GameStaticInfo._CONFIG_INSTANCE.IsFullScreen = button_pressed;
-        GameStaticInfo._CONFIG_INSTANCE.Save();
-    }
+		GameStaticInfo._CONFIG_INSTANCE.IsFullScreen = button_pressed;
+		GameStaticInfo._CONFIG_INSTANCE.Save();
+	}
 }
 
 
