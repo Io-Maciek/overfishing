@@ -1,7 +1,61 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Options/OptionsScreenScript.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/ButtonPref.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Fonts/Schoolbell/Schoolbell-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Materials/ToggleMaterial.tres" type="StyleBox" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.992157, 0.478431, 0.501961, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 75
+corner_radius_top_right = 75
+corner_radius_bottom_right = 75
+corner_radius_bottom_left = 75
+corner_detail = 3
+shadow_color = Color( 0, 0, 0, 0.701961 )
+shadow_size = 5
+shadow_offset = Vector2( 4, 4 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.780392, 0, 0.0392157, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 75
+corner_radius_top_right = 75
+corner_radius_bottom_right = 75
+corner_radius_bottom_left = 75
+corner_detail = 3
+shadow_color = Color( 0, 0, 0, 0.701961 )
+shadow_size = 5
+shadow_offset = Vector2( 4, 4 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.780392, 0, 0.0392157, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 75
+corner_radius_top_right = 75
+corner_radius_bottom_right = 75
+corner_radius_bottom_left = 75
+corner_detail = 3
+shadow_color = Color( 0, 0, 0, 0 )
 
 [node name="OptionsScreen" type="Control"]
 anchor_right = 1.0
@@ -17,4 +71,40 @@ margin_right = 152.0
 margin_bottom = 675.0
 text = "back"
 
+[node name="FullScreenToggle" type="Control" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -120.0
+margin_top = 432.0
+margin_right = -120.0
+margin_bottom = 432.0
+
+[node name="Label" type="Label" parent="FullScreenToggle"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -24.0
+margin_right = 272.0
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 1 )
+text = "fullscreen"
+
+[node name="CheckButton" type="CheckButton" parent="FullScreenToggle/Label"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -18.5
+margin_right = -4.0
+margin_bottom = 21.5
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/hover_pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+align = 1
+icon_align = 1
+
 [connection signal="pressed" from="BtnBackToMenu" to="." method="_on_BtnBackToMenu_pressed"]
+[connection signal="toggled" from="FullScreenToggle/Label/CheckButton" to="." method="_on_fullscreen_toggled"]

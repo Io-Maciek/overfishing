@@ -9,7 +9,7 @@ public class PauseGameScript : Control
 	string pauseMaster = null;
 	
 	WorldEnvironment _env;
-	Button BtnBackToMenu;
+    Control MainPanel;
 
 	public override void _Ready()
 	{
@@ -18,11 +18,11 @@ public class PauseGameScript : Control
 		_env = (WorldEnvironment)GetNode("WorldEnvironment");
 		_env.Environment.DofBlurNearEnabled = false;
 
-		BtnBackToMenu = GetNode("BtnBackToMenu") as Button;
-        BtnBackToMenu.Visible = false;
+        MainPanel = GetNode("MainPanel") as Control;
+        MainPanel.Visible = false;
 
 
-        for (int i = 0; i < GameStaticInfo._PLAYERS.Count; i++)
+		for (int i = 0; i < GameStaticInfo._PLAYERS.Count; i++)
 		{
 			inputListeners[i] = $"{GameStaticInfo._PLAYERS[i].AssignedDevice.ToLower()}_pause";
 		}
@@ -57,7 +57,8 @@ public class PauseGameScript : Control
 	{
 		Debug.WriteLine("UNPAUSED BY: " + pauseMaster);
 		_env.Environment.DofBlurNearEnabled = false;
-        BtnBackToMenu.Visible = false;
+        MainPanel.Visible = false;
+        (GetNode("OptionsScreen") as OptionsScreenScript).Visible = false;
 
         pauseMaster = null;
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
@@ -68,7 +69,9 @@ public class PauseGameScript : Control
 	{
 		Debug.WriteLine("PAUSED BY: " + actionKey);
 		_env.Environment.DofBlurNearEnabled = true;
-		BtnBackToMenu.Visible = true;
+        MainPanel.Visible = true;
+		(GetNode("OptionsScreen") as OptionsScreenScript).Visible = false;
+
 
         pauseMaster = actionKey;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -83,4 +86,12 @@ public class PauseGameScript : Control
 
 		GetTree().ChangeScene("res://Scenes/MainMenu.tscn");
 	}
+
+    private void _on_BtnOptions_pressed()
+    {
+		(GetNode("OptionsScreen") as OptionsScreenScript).ShowOptions(GetNode("MainPanel") as Control);
+    }
 }
+
+
+

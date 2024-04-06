@@ -9,6 +9,12 @@ public class LoadDirectoryInit : Node
 	{
 		GameDirectory.CheckExistanceOfAppdataDirectory();
 		GameConfig _config = GameConfig.Load();
-		Debug.WriteLine(_config.Variable);
-	}
+
+        ApplyConfigOptions(_config);
+    }
+
+    private void ApplyConfigOptions(GameConfig config)
+    {
+        config.Apply();
+    }
 }

@@ -1,5 +1,6 @@
 using Godot;
 using Overfishing.GameSaving;
+using Overfishing.Statics;
 using System;
 using System.Diagnostics;
 
@@ -15,11 +16,9 @@ public class MainPanelScript : Control
 		playerChooseScreen.Visible = false;
 
 		optionScreen = (OptionsScreenScript)GetParent().GetNode("OptionsScreen");
-		optionScreen.Visible = false;
-		optionScreen.PreviousScreen = this;
 	}
 
-	private void _on_BtnStartGame_pressed()
+    private void _on_BtnStartGame_pressed()
 	{
 		playerChooseScreen.Visible = true;
 		Visible = false;
@@ -28,8 +27,7 @@ public class MainPanelScript : Control
 
 	private void _on_BtnGoToOptions_pressed()
 	{
-		optionScreen.Visible = true;
-		Visible = false;
+		optionScreen.ShowOptions(this);
 	}
 
 
