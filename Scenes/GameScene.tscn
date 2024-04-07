@@ -374,7 +374,7 @@ __meta__ = {
 layer = 101
 
 [node name="Rod" parent="RodsLayer" instance=ExtResource( 14 )]
-position = Vector2( 248, 1083 )
+position = Vector2( 1240, 619 )
 
 [node name="CanvasLayer4" type="CanvasLayer" parent="."]
 layer = 100
