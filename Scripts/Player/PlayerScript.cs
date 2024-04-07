@@ -15,9 +15,12 @@ public class PlayerScript : KinematicBody2D
 	Vector2 _sprite_scale;
 	public Node2D scene_root { get; set; }
 	public PlayersInit MovementServer;
-	public bool IsAlive { get; set; }
+	public bool IsAlive { get; set; } = true;
 
-	public override void _Ready()
+	[Signal]
+    public delegate void KillPlayerEventHandler(PlayerScript player);
+
+    public override void _Ready()
 	{
 	}
 
@@ -39,6 +42,9 @@ public class PlayerScript : KinematicBody2D
 
 	public override void _Process(float delta)
 	{
+		if (!IsAlive)
+			return;
+
 		if (fish == null)
 			return;
 
@@ -54,8 +60,11 @@ public class PlayerScript : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
-		// return if fish was not set yet
-		if (fish == null)
+        if (!IsAlive)
+            return;
+
+        // return if fish was not set yet
+        if (fish == null)
 			return;
 
 		// get movement vetor
@@ -103,5 +112,11 @@ public class PlayerScript : KinematicBody2D
 		var move = new Vector2(vec_Left.x, sin) * 37.0f;
 
         MoveAndSlide(move);
+    }
+
+    internal void Kill()
+    {
+		IsAlive = false;
+        EmitSignal("KillPlayerEventHandler", this);
     }
 }

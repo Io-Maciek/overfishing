@@ -32,7 +32,8 @@ public class PlayersInit : Node
 
 			GetParent().GetNode("CanvasLayer").CallDeferred("add_child", main_node);
 			_player_script.scene_root = GetTree().Root.GetNode("Scene") as Node2D;
-		}
+			_player_script.Connect("KillPlayerEventHandler", GetTree().Root.GetNode("Scene"), "_player_killed");
+        }
 
 		AbilitiesExceptions = new System.Collections.Generic.Dictionary<string, (Func<Vector2, Vector2>, List<string>)>();
 	}
