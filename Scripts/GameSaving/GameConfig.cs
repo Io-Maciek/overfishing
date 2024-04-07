@@ -13,10 +13,12 @@ namespace Overfishing.GameSaving
 		public static string _APPDATA_FILE_PATH;
 
 		public bool IsFullScreen { get; set; }
+		public bool AlphaFishUnlocked { get; set; }
+		
 
 		public static GameConfig CreateDefault()
 		{
-			return new GameConfig { IsFullScreen = true };
+			return new GameConfig { IsFullScreen = true, AlphaFishUnlocked = false };
 		}
 
 		internal static GameConfig Load()

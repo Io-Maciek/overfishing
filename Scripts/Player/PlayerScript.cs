@@ -15,6 +15,7 @@ public class PlayerScript : KinematicBody2D
 	Vector2 _sprite_scale;
 	public Node2D scene_root { get; set; }
 	public PlayersInit MovementServer;
+	public bool IsAlive { get; set; }
 
 	public override void _Ready()
 	{
@@ -65,24 +66,42 @@ public class PlayerScript : KinematicBody2D
 
 		// return if player did not moved
 		if (movement == Vector2.Zero)
-			return;
-
-
-		// rotate fish sprite in the direction of the movement
-		var movingLeft = (movement.x < 0);
-
-		if (horizontalVectorLeft != movingLeft)
-		{
-			horizontalVectorLeft = movingLeft;
-			playerSprite.Scale = horizontalVectorLeft ? _sprite_scale : new Vector2(_sprite_scale.x * -1.0f, _sprite_scale.y);
-		}
-
-		horizontalVectorLeft = movingLeft;
-		LookAt(GlobalPosition + (horizontalVectorLeft ?  (-1 * movement): movement));
-
-
-		// apply movement
-		//MoveAndCollide
-		MoveAndSlide(movement);
+			_handleWaterGravity(delta);
+		else
+			_handleMovement(movement);
 	}
+
+    private void _handleMovement(Vector2 movement)
+    {
+		if(_time!=0.0f)
+			_time = 0.0f;
+        // rotate fish sprite in the direction of the movement
+        var movingLeft = (movement.x < 0);
+
+        if (horizontalVectorLeft != movingLeft)
+        {
+            horizontalVectorLeft = movingLeft;
+            playerSprite.Scale = horizontalVectorLeft ? _sprite_scale : new Vector2(_sprite_scale.x * -1.0f, _sprite_scale.y);
+        }
+
+        horizontalVectorLeft = movingLeft;
+        LookAt(GlobalPosition + (horizontalVectorLeft ? (-1 * movement) : movement));
+
+
+        // apply movement
+        //MoveAndCollide
+        MoveAndSlide(movement);
+    }
+
+
+	float _time = 0.0f;
+    private void _handleWaterGravity(float delta)
+    {
+		_time += delta;
+		var sin = Mathf.Cos(_time*5)*0.6f;
+		var vec_Left = Vector2.Left ;
+		var move = new Vector2(vec_Left.x, sin) * 37.0f;
+
+        MoveAndSlide(move);
+    }
 }

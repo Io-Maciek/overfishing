@@ -27,12 +27,7 @@ public class PlayerInputs : Control
         fishLoader = (FishLoaderScript)GetNode("FishLoader");
         //Debug.WriteLine($"{String.Join(" ", fishLoader.AvailableFishes.Select(x=>x.SpriteFullPath()))}");
 
-        for (int i = 0; i < 4; i++)
-        {
-            Players.Add(null);
-            playerPanels[i] = (PlayerPanel)GetNode($"Player{i + 1}");
-        }
-        UpdatePlayers();
+
     }
 
     public override void _Process(float delta)
@@ -54,7 +49,7 @@ public class PlayerInputs : Control
             return;
 
         Players.Clear();
-        fishLoader.GetAll();
+        fishLoader.LoadFish();
 
         for (int i = 0; i < 4; i++)
         {
@@ -259,5 +254,20 @@ public class PlayerInputs : Control
         GameStaticInfo._PLAYERS.RemoveAll(x => x == null);
 
         GetTree().ChangeScene("res://Scenes/GameScene.tscn");
+    }
+
+    internal void ShowScreen(MainPanelScript mainPanelScript)
+    {
+        fishLoader.LoadFish();
+
+        for (int i = 0; i < 4; i++)
+        {
+            Players.Add(null);
+            playerPanels[i] = (PlayerPanel)GetNode($"Player{i + 1}");
+        }
+        UpdatePlayers();
+
+        Visible = true;
+        mainPanelScript.Visible = false;
     }
 }

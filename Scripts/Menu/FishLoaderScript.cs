@@ -15,16 +15,40 @@ internal class FishLoaderScript : Node
 
     public override void _Ready()
     {
+/*        GetAll();
+        AvailableFishes.AddRange(AddBonusFish());
+
+        if (AvailableFishes.Count < 4)
+        {
+            throw new Exception("Number of fish must be at least 4");
+        }*/
+    }
+
+    public void LoadFish()
+    {
         GetAll();
+        AvailableFishes.AddRange(AddBonusFish());
+
         if (AvailableFishes.Count < 4)
         {
             throw new Exception("Number of fish must be at least 4");
         }
     }
 
-    public void GetAll()
+    void GetAll()
     {
         AvailableFishes = GetDefault();
+    }
+
+    public List<AFish> AddBonusFish()
+    {
+        var bonus = new List<AFish>();
+        var _c = GameStaticInfo._CONFIG_INSTANCE;
+
+        if (_c.AlphaFishUnlocked)
+            bonus.Add(new AlphaFish());
+
+        return bonus;
     }
 
     List<AFish> GetDefault()
@@ -35,8 +59,7 @@ internal class FishLoaderScript : Node
             new Nemo(),
             new PufferFish(),
             new Lanternfish(),
-            new Camo(),
-            new AlphaFish(),
+            //new Camo(),
         };
     }
 }

@@ -43,9 +43,9 @@ public class PlayerPanel : Control
 			PlayerName.Text = player.AssignedDevice+"\n"+player.Fish.Name;
 			fishTexture.Texture = ResourceLoader.Load(player.Fish.SpriteFullPath()) as Texture;
 			Description.Text = player.Fish.ActionDescription;
-            fishTexture.RectPivotOffset = this.RectSize / 2.0f;
+			fishTexture.RectPivotOffset = this.RectSize / 2.0f;
 
-            animation.Play("idle");
+			animation.Play("idle");
 		}
 	}
 }

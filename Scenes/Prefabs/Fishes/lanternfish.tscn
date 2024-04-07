@@ -71,8 +71,7 @@ scale = Vector2( 10, 10 )
 enabled = false
 texture = ExtResource( 5 )
 texture_scale = 0.5
-range_layer_min = -11
-range_layer_max = 100
+range_layer_max = 120
 
 [node name="Main" type="Sprite" parent="Player/Sprite"]
 texture = ExtResource( 1 )

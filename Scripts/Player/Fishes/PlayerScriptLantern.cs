@@ -10,6 +10,8 @@ public class PlayerScriptLantern : PlayerScript
     public Light2D light;
     public ShaderMaterial shader;
 
+    public CanvasItemMaterial[] BackGroundGrass = new CanvasItemMaterial[2];
+
     public override void SetPlayer(PlayerUIModel player, PlayersInit movementServer)
     {
         base.SetPlayer(player, movementServer);
@@ -22,6 +24,9 @@ public class PlayerScriptLantern : PlayerScript
 
         shader = (ShaderMaterial)((TextureRect)movementServer.GetParent().GetNode("CanvasLayer2").GetNode("BackgroundWater")).Material;
         shader.SetShaderParam("ignore_light", true);
+
+        BackGroundGrass[0] = (CanvasItemMaterial)(MovementServer.GetParent().GetNode("CanvasLayer4").GetNode("BgUp") as Node2D).Material;
+        BackGroundGrass[1] = (CanvasItemMaterial)(MovementServer.GetParent().GetNode("CanvasLayer4").GetNode("Bg") as Node2D).Material;
     }
 
     private void _lantern_ability_over()
@@ -33,11 +38,21 @@ public class PlayerScriptLantern : PlayerScript
 
         shader.SetShaderParam("ignore_light", true);
         light.Enabled = false;
+
+        foreach (var grass in BackGroundGrass)
+        {
+            grass.LightMode = CanvasItemMaterial.LightModeEnum.Normal;
+        }
     }
 
     public void StartAbility()
     {
         shader.SetShaderParam("ignore_light", false);
         light.Enabled = true;
+
+        foreach (var grass in BackGroundGrass)
+        {
+            grass.LightMode = CanvasItemMaterial.LightModeEnum.LightOnly;
+        }
     }
 }

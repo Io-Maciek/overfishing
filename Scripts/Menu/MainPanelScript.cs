@@ -20,8 +20,7 @@ public class MainPanelScript : Control
 
     private void _on_BtnStartGame_pressed()
 	{
-		playerChooseScreen.Visible = true;
-		Visible = false;
+		playerChooseScreen.ShowScreen(this);
 	}
 
 
