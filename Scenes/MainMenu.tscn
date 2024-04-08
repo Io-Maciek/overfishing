@@ -211,6 +211,7 @@ text = "back"
 script = ExtResource( 8 )
 
 [node name="PanelAbout" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 1.0
@@ -242,7 +243,7 @@ custom_fonts/font = SubResource( 5 )
 text = "this game was created for fishfest game jam in 7 days.
 
 programming: io
-art: my gf"
+art: marysia (my gf <3)"
 autowrap = true
 
 [node name="HowToPlay" type="Label" parent="PanelAbout"]

@@ -123,11 +123,10 @@ public class PlayerScript : KinematicBody2D
         MoveAndSlide(move);
     }
 
-    Node _parent;
     internal void Kill(fishing_rod rod)
     {
         IsAlive = false;
-        _parent = GetParent().GetParent();
+        var _parent = GetParent().GetParent();
         Debug.WriteLine(_parent+"\t\t\t"+GetParent());
 
         _parent.RemoveChild(GetParent());
@@ -140,10 +139,9 @@ public class PlayerScript : KinematicBody2D
 
     public void KillAndDisappear(fishing_rod rod)
     {
-        Debug.WriteLine(GetParent() + "\t\t KILL\t\t"+ _parent);
-
-        rod.RemoveChild(GetParent());
-        _parent.CallDeferred("add_child", this);
+        var _parent = GetTree().Root.GetNode("Scene").GetNode("CanvasLayer");
+        rod.CallDeferred("remove_child", GetParent());
+        _parent.CallDeferred("add_child", GetParent());
         Position = new Vector2(-9999, -9999);
     }
 
