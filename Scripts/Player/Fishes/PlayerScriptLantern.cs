@@ -9,6 +9,7 @@ public class PlayerScriptLantern : PlayerScript
     public Timer abilityTimer;
     public Light2D light;
     public ShaderMaterial shader;
+    GameObserver rods;
 
     public CanvasItemMaterial[] BackGroundGrass = new CanvasItemMaterial[2];
 
@@ -25,6 +26,7 @@ public class PlayerScriptLantern : PlayerScript
         shader = (ShaderMaterial)((TextureRect)movementServer.GetParent().GetNode("CanvasLayer2").GetNode("BackgroundWater")).Material;
         shader.SetShaderParam("ignore_light", true);
 
+        rods = movementServer.GetParent() as GameObserver;
         BackGroundGrass[0] = (CanvasItemMaterial)(MovementServer.GetParent().GetNode("CanvasLayer4").GetNode("BgUp") as Node2D).Material;
         BackGroundGrass[1] = (CanvasItemMaterial)(MovementServer.GetParent().GetNode("CanvasLayer4").GetNode("Bg") as Node2D).Material;
     }
@@ -38,6 +40,7 @@ public class PlayerScriptLantern : PlayerScript
 
         shader.SetShaderParam("ignore_light", true);
         light.Enabled = false;
+        rods.ToggleRodLight();
 
         foreach (var grass in BackGroundGrass)
         {
@@ -49,6 +52,7 @@ public class PlayerScriptLantern : PlayerScript
     {
         shader.SetShaderParam("ignore_light", false);
         light.Enabled = true;
+        rods.ToggleRodLight(); 
 
         foreach (var grass in BackGroundGrass)
         {

@@ -114,9 +114,25 @@ public class PlayerScript : KinematicBody2D
         MoveAndSlide(move);
     }
 
-    internal void Kill()
+	Node _parent;
+    internal void Kill(fishing_rod rod)
     {
 		IsAlive = false;
+		Debug.WriteLine(Position);
+		_parent = GetParent();
+
+        _parent.RemoveChild(this);
+		rod.CallDeferred("add_child", this);
+		Position = new Vector2(24, -1128);
+        Debug.WriteLine(Position);
+
         EmitSignal("KillPlayerEventHandler", this);
+    }
+
+	public void KillAndDisappear()
+	{
+        GetParent().RemoveChild(this);
+        _parent.CallDeferred("add_child", this);
+        Position = new Vector2(-9999, -9999);
     }
 }

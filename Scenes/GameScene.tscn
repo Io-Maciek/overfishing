@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scripts/GameScene/PlayersInit.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/PauseScene.tscn" type="PackedScene" id=2]
@@ -13,7 +13,6 @@
 [ext_resource path="res://Images/Environment/flower2.png" type="Texture" id=11]
 [ext_resource path="res://Images/Environment/rock3.png" type="Texture" id=12]
 [ext_resource path="res://Images/Environment/tree.png" type="Texture" id=13]
-[ext_resource path="res://Scenes/Prefabs/Rods/rod1.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scripts/GameScene/GameObserver.cs" type="Script" id=15]
 
 [sub_resource type="DynamicFont" id=5]
@@ -373,9 +372,6 @@ __meta__ = {
 [node name="RodsLayer" type="CanvasLayer" parent="."]
 layer = 101
 
-[node name="Rod" parent="RodsLayer" instance=ExtResource( 14 )]
-position = Vector2( 1240, 619 )
-
 [node name="CanvasLayer4" type="CanvasLayer" parent="."]
 layer = 100
 
@@ -639,3 +635,5 @@ shape = SubResource( 9 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 80
+
+[connection signal="TimeUpdateEventHandler" from="CanvasLayer3/TimeLabel" to="." method="_TimeLabel_TimeUpdated"]
