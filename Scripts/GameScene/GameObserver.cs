@@ -18,12 +18,12 @@ public class GameObserver : Node2D
 	PackedScene trash_scene;
 	CanvasLayer trash_layer;
 
-    [Signal]
-    public delegate void TimeStopsEventHandler();
+	[Signal]
+	public delegate void TimeStopsEventHandler();
 
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
 	{
 		rodsCanvas = GetNode("RodsLayer");
 		trash_layer = (CanvasLayer)GetNode("CanvasLayer");
@@ -53,7 +53,7 @@ public class GameObserver : Node2D
 	public void AddRod(bool flipped_x, bool flipped_y)
 	{
 		var _rod_new = (fishing_rod)rod_scene.Instance();
-		_rod_new.Randomize(flipped_x, flipped_y, rod_number);
+		_rod_new.Randomize(flipped_x, flipped_y, rod_number, this);
 		rods.Add(_rod_new);
 		rodsCanvas.CallDeferred("add_child", _rod_new);
 
@@ -99,9 +99,9 @@ public class GameObserver : Node2D
 		if (diff == condition)
 		{
 			Debug.WriteLine("KONIEC GRY");
-            EmitSignal("TimeStopsEventHandler");
-        }
-    }
+			EmitSignal("TimeStopsEventHandler");
+		}
+	}
 
 
 	bool first_rod_appeared = false;

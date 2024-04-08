@@ -1,5 +1,7 @@
 using Godot;
+using Overfishing.Statics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 public class fishing_rod : Node2D
@@ -49,11 +51,14 @@ public class fishing_rod : Node2D
 	}
 
 	int number = 0;
+	Node playerCanvas;
 
-	public void Randomize(bool flipped_x, bool flipped_y, int rod_number)
+	public void Randomize(bool flipped_x, bool flipped_y, int rod_number, GameObserver gameObserver)
 	{
 		if (_image_chosen)
 			return;
+
+		this.playerCanvas = gameObserver.GetNode("CanvasLayer");
 
 		is_flipped = flipped_y;
 		number = rod_number;
@@ -153,9 +158,55 @@ public class fishing_rod : Node2D
 		_time = 0.0f;
 		Speed = new Random().Next(speed_range[0], speed_range[1]);
 
-		var y_pos = is_flipped ? new Random().Next(y_range_flipped[0], y_range_flipped[1] + 1) :
-			new Random().Next(y_range[0], y_range[1] + 1);
-		MoveToPosition = new Vector2(new Random().Next(x_range[0], x_range[1] + 1), y_pos);
+
+		if(new Random().NextDouble() >= 0.55)
+		{
+			var alive_players = new List<PlayerScript>();
+
+
+			for (int i = 0; i < GameStaticInfo._PLAYERS.Count; i++)
+			{
+				try
+				{
+					var player_parent = (Node2D)playerCanvas.GetNode($"Player{i}");
+					var player = player_parent.GetNode("Player") as PlayerScript;
+
+					if (player.IsAlive)
+						alive_players.Add(player);
+				}
+				catch (Exception)
+				{
+					continue;
+				}
+            }
+
+			if(alive_players.Count==0)
+			{
+                var y_pos = is_flipped ? new Random().Next(y_range_flipped[0], y_range_flipped[1] + 1) :
+new Random().Next(y_range[0], y_range[1] + 1);
+                MoveToPosition = new Vector2(new Random().Next(x_range[0], x_range[1] + 1), y_pos);
+			}
+			else
+			{
+				var choosen_player = alive_players[new Random().Next(alive_players.Count)];
+
+                MoveToPosition = choosen_player.Position + new Vector2(0, (is_flipped ? -1 : 1) * 550);
+                Debug.WriteLine($"GOING DIRECTLY FOR PLAYER {choosen_player.fish.Name}\t\t{MoveToPosition}");
+            }
+
+
+
+		}
+		else
+		{
+			var y_pos = is_flipped ? new Random().Next(y_range_flipped[0], y_range_flipped[1] + 1) :
+	new Random().Next(y_range[0], y_range[1] + 1);
+			MoveToPosition = new Vector2(new Random().Next(x_range[0], x_range[1] + 1), y_pos);
+		}
+
+		// TODO 1/3 chances to go directly into some random player position
+
+
 		//new Vector2(x_range[0], y_range[1]);//
 
 		_direction = Position.DirectionTo(MoveToPosition);

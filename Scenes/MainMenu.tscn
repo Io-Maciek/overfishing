@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Fonts/Gluten/static/Gluten-Light.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Menu/LoadDirectoryInit.cs" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Scenes/Prefabs/ButtonPref.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Prefabs/PlayerCanvaChooser.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scripts/Menu/FishLoaderScript.cs" type="Script" id=8]
+[ext_resource path="res://Scripts/Menu/PanelAboutScript.cs" type="Script" id=9]
+[ext_resource path="res://Fonts/Schoolbell/Schoolbell-Regular.ttf" type="DynamicFontData" id=10]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -49,6 +51,14 @@ corner_detail = 3
 shadow_color = Color( 0, 0, 0, 0.701961 )
 shadow_size = 5
 shadow_offset = Vector2( 4, 4 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 10 )
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -101,9 +111,9 @@ script = ExtResource( 3 )
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -152.0
-margin_top = 400.0
+margin_top = 300.0
 margin_right = 152.0
-margin_bottom = 475.0
+margin_bottom = 375.0
 text = "start"
 
 [node name="BtnGoToOptions" parent="MainPanel" instance=ExtResource( 6 )]
@@ -123,6 +133,15 @@ margin_top = 600.0
 margin_right = 152.0
 margin_bottom = 675.0
 text = "quit"
+
+[node name="BtnAbout" parent="MainPanel" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -152.0
+margin_top = 400.0
+margin_right = 152.0
+margin_bottom = 475.0
+text = "about"
 
 [node name="PlayerChooseScreen" type="Control" parent="."]
 visible = false
@@ -191,8 +210,70 @@ text = "back"
 [node name="FishLoader" type="Node" parent="PlayerChooseScreen"]
 script = ExtResource( 8 )
 
+[node name="PanelAbout" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1.0
+margin_bottom = 1.0
+script = ExtResource( 9 )
+
+[node name="BtnBackToMenu" parent="PanelAbout" instance=ExtResource( 6 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -152.0
+margin_top = 600.0
+margin_right = 152.0
+margin_bottom = 675.0
+text = "back"
+
+[node name="Text" type="Label" parent="PanelAbout"]
+anchor_right = 0.5
+anchor_bottom = 0.988
+margin_left = 5.0
+margin_top = 160.0
+margin_right = 7.5
+margin_bottom = 7.65198
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+custom_fonts/font = SubResource( 5 )
+text = "this game was created for fishfest game jam in 7 days.
+
+programming: io
+art: my gf"
+autowrap = true
+
+[node name="HowToPlay" type="Label" parent="PanelAbout"]
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.988
+margin_left = -0.5
+margin_top = 160.0
+margin_right = 2.0
+margin_bottom = 7.65198
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 1
+custom_fonts/font = SubResource( 5 )
+text = "how to play:
+WSAD or left joystick to move,
+SPACE or A/X key to use ability,
+trash will slow you down,
+being caught on fishing rod will kill you"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
 [connection signal="pressed" from="MainPanel/BtnStartGame" to="MainPanel" method="_on_BtnStartGame_pressed"]
 [connection signal="pressed" from="MainPanel/BtnGoToOptions" to="MainPanel" method="_on_BtnGoToOptions_pressed"]
 [connection signal="pressed" from="MainPanel/BtnQuitGame" to="MainPanel" method="_on_BtnQuitGame_pressed"]
+[connection signal="pressed" from="MainPanel/BtnAbout" to="MainPanel" method="_on_BtnAbout_pressed"]
 [connection signal="pressed" from="PlayerChooseScreen/BtnStartGame" to="PlayerChooseScreen" method="_on_BtnStartGame_pressed"]
 [connection signal="pressed" from="PlayerChooseScreen/BtnBackToMenu" to="PlayerChooseScreen" method="_on_BtnBackToMenu_pressed"]
+[connection signal="pressed" from="PanelAbout/BtnBackToMenu" to="PanelAbout" method="_on_BtnBackToMenu_pressed"]

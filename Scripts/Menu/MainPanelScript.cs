@@ -6,19 +6,23 @@ using System.Diagnostics;
 
 public class MainPanelScript : Control
 {
-    PlayerInputs playerChooseScreen;
+	PlayerInputs playerChooseScreen;
+	PanelAboutScript aboutScreen;
 	OptionsScreenScript optionScreen;
 
 	public override void _Ready()
 	{
-        Input.MouseMode = Input.MouseModeEnum.Visible;
-        playerChooseScreen = (PlayerInputs)GetParent().GetNode("PlayerChooseScreen");
+		Input.MouseMode = Input.MouseModeEnum.Visible;
+		playerChooseScreen = (PlayerInputs)GetParent().GetNode("PlayerChooseScreen");
+        aboutScreen = (PanelAboutScript)GetParent().GetNode("PanelAbout");
 		playerChooseScreen.Visible = false;
+		aboutScreen.Visible = false;
+		Visible = true;
 
-		optionScreen = (OptionsScreenScript)GetParent().GetNode("OptionsScreen");
+        optionScreen = (OptionsScreenScript)GetParent().GetNode("OptionsScreen");
 	}
 
-    private void _on_BtnStartGame_pressed()
+	private void _on_BtnStartGame_pressed()
 	{
 		playerChooseScreen.ShowScreen(this);
 	}
@@ -34,4 +38,12 @@ public class MainPanelScript : Control
 	{
 		GetTree().Quit();
 	}
+
+    private void _on_BtnAbout_pressed()
+    {
+		aboutScreen.ShowMe(this);
+    }
 }
+
+
+
