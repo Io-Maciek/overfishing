@@ -75,7 +75,6 @@ public class PlayerScript : KinematicBody2D
             return;
         Vector2 movement = MovementServer.MovementServer(device);
 
-
         // return if player did not moved
         if (movement == Vector2.Zero)
             _handleWaterGravity(delta);

@@ -70,8 +70,17 @@ public class PlayersInit : Node
 
 	private Vector2 _applyNormalMovement(string device)
 	{
-		return Input.GetVector($"{device}_left", $"{device}_right", $"{device}_up", $"{device}_down")
-			* MovementSpeed;
+        /*var x= Input.GetVector($"{device}_left", $"{device}_right", $"{device}_up", $"{device}_down")
+			* MovementSpeed;*/ // does not work in WEB TODO
+
+        var strength = new Vector2(
+        Input.GetActionStrength($"{device}_right") - Input.GetActionStrength($"{device}_left"),
+        Input.GetActionStrength($"{device}_down") - Input.GetActionStrength($"{device}_up")
+    ).Normalized();
+
+
+        return strength.Length() > .1f ? (strength* MovementSpeed) : Vector2.Zero; //return x;
+
 	}
 
 	private void _guppy_ability_over()
