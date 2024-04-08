@@ -21,13 +21,12 @@ public class EndGameScript : Control
 
 	public void ShowMe(PlayerScript winner)
 	{
-		GetTree().Paused = true;
-		winner_sprite.Texture = ResourceLoader.Load<Texture>(winner.fish.SpriteFullPath());
+		string path = winner.fish.SpriteFullPath();
+		winner.QueueFree();
+        //GetTree().Paused = true;
+        winner_sprite.Texture = ResourceLoader.Load<Texture>(path);
 		Visible = true;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
-
-		//_env.Environment.DofBlurNearEnabled = true;
-		Debug.WriteLine("The winnder is " + winner.fish.Name);
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.

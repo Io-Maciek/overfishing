@@ -18,8 +18,11 @@ public class fishing_rod : Node2D
 	public static int y_range_start_up = -690;
 	bool is_flipped = false;
 	bool kill_animation = false;
+	bool game_ended = false;
 
 
+	AudioStreamPlayer2D pulling_rod;
+	AudioStreamPlayer2D catching_rod;
 	Texture rod_texture;
 	Texture bait_texture;
 
@@ -47,9 +50,8 @@ public class fishing_rod : Node2D
 	{
 		rod_texture = (GetNode("Rod1") as Sprite).Texture;
 		bait_texture = (GetNode("Bait3") as Sprite).Texture;
-
-		//Randomize(false, false); //TODO
-	}
+        //Randomize(false, false); //TODO
+    }
 
 	int number = 0;
 	Node playerCanvas;
@@ -59,7 +61,10 @@ public class fishing_rod : Node2D
 		if (_image_chosen)
 			return;
 
-		this.playerCanvas = gameObserver.GetNode("CanvasLayer");
+
+        pulling_rod = GetNode("pulling_out") as AudioStreamPlayer2D;
+        catching_rod = GetNode("catching") as AudioStreamPlayer2D;
+        this.playerCanvas = gameObserver.GetNode("CanvasLayer");
 
 		is_flipped = flipped_y;
 		number = rod_number;
@@ -98,7 +103,9 @@ public class fishing_rod : Node2D
 		MoveToPosition = new Vector2(x_pos, y_random_pos);
 
 		_direction = Position.DirectionTo(MoveToPosition);
-		Debug.WriteLine($"{number}.\tPostion generated: " + MoveToPosition + "\tWith speed: " + Speed + "\tThe direction is: " + _direction);
+		pulling_rod.Play();
+
+        Debug.WriteLine($"{number}.\tPostion generated: " + MoveToPosition + "\tWith speed: " + Speed + "\tThe direction is: " + _direction);
 	}
 
 	Vector2 _direction;
@@ -128,16 +135,23 @@ public class fishing_rod : Node2D
 
 		if(Position == MoveToPosition)
 		{
-			if (kill_animation)
+			if (game_ended)
 			{
-				if(catch_fish != null)
-				{
-					catch_fish.KillAndDisappear(this);//.QueueFree();
-					kill_animation = false;
-					catch_fish = null;
-				}
+				QueueFree();
 			}
-			GoToNext();// TODO idk
+			else
+			{
+				if (kill_animation)
+				{
+					if (catch_fish != null)
+					{
+						catch_fish.KillAndDisappear(this);//.QueueFree();
+						kill_animation = false;
+						catch_fish = null;
+					}
+				}
+				GoToNext();// TODO idk
+			}
 		}
 	}
 
@@ -169,17 +183,17 @@ public class fishing_rod : Node2D
 
 			if(alive_players.Count==0)
 			{
-                var y_pos = is_flipped ? new Random().Next(y_range_flipped[0], y_range_flipped[1] + 1) :
+				var y_pos = is_flipped ? new Random().Next(y_range_flipped[0], y_range_flipped[1] + 1) :
 new Random().Next(y_range[0], y_range[1] + 1);
-                MoveToPosition = new Vector2(new Random().Next(x_range[0], x_range[1] + 1), y_pos);
+				MoveToPosition = new Vector2(new Random().Next(x_range[0], x_range[1] + 1), y_pos);
 			}
 			else
 			{
 				var choosen_player = alive_players[new Random().Next(alive_players.Count)];
 
-                MoveToPosition = choosen_player.Position + new Vector2(0, (is_flipped ? -1 : 1) * 550);
-                Debug.WriteLine($"GOING DIRECTLY FOR PLAYER {choosen_player.fish.Name}\t\t{MoveToPosition}");
-            }
+				MoveToPosition = choosen_player.Position + new Vector2(0, (is_flipped ? -1 : 1) * 550);
+				Debug.WriteLine($"GOING DIRECTLY FOR PLAYER {choosen_player.fish.Name}\t\t{MoveToPosition}");
+			}
 
 
 
@@ -234,7 +248,8 @@ new Random().Next(y_range[0], y_range[1] + 1);
 			}
 		}
 
-		catch_fish = player;
+        catching_rod.Play();
+        catch_fish = player;
 		catch_fish.Kill(this);
 		HandleStartKillAnimation();
 	}
@@ -244,6 +259,14 @@ new Random().Next(y_range[0], y_range[1] + 1);
 		kill_animation = true;
 		MoveToPosition = new Vector2(Position.x, is_flipped?y_range_start_up:y_range_start_down);
 		_direction = Position.DirectionTo(MoveToPosition);
+	}
+
+	public void ToggleGameEnd()
+	{
+		kill_animation = true;
+		MoveToPosition = new Vector2(Position.x, is_flipped ? y_range_start_up : y_range_start_down);
+		_direction = Position.DirectionTo(MoveToPosition);
+		game_ended = true;
 	}
 }
 

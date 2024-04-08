@@ -20,13 +20,14 @@ public class TimeManager : Label
 
 	public override void _Process(float delta)
 	{
-		if (!IsRunning)
-			return;
+        _time += TimeSpan.FromSeconds(delta);
+        if (IsRunning)
+		{
+            Text = _time.ToString(@"mm\:ss");
+        }
 
-		_time += TimeSpan.FromSeconds(delta);
-		Text = _time.ToString(@"mm\:ss");
 
-		if (_previous_second != _time.Seconds)
+        if (_previous_second != _time.Seconds)
 		{
 			_previous_second = _time.Seconds;
 			_previous_minute = _time.Minutes;

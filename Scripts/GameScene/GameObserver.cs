@@ -20,6 +20,8 @@ public class GameObserver : Node2D
 	PackedScene trash_scene;
 	CanvasLayer trash_layer;
 
+	public bool GameEnded = false;
+
 	[Signal]
 	public delegate void TimeStopsEventHandler();
 
@@ -108,6 +110,11 @@ public class GameObserver : Node2D
 				winner = players.Where(x => x.IsAlive).First();
 			}
 
+			GameEnded = true;
+
+			foreach (var rod in rods)
+				rod.ToggleGameEnd();
+
 
 			GetNode("CanvasLayer3").GetNode("Pause").QueueFree();
 			(GetNode("CanvasLayer5").GetNode("EndGame") as EndGameScript).ShowMe(winner);
@@ -128,27 +135,30 @@ public class GameObserver : Node2D
 
 	private void _TimeLabel_TimeUpdated(int minute, int second)
 	{
-		if (!first_rod_appeared && minute >= 0 && second >= 5)
+		if (!GameEnded)
 		{
-			Debug.WriteLine("Adding first rod");
-			first_rod_appeared = true;
-			rod_number++;
-			AddRod(new Random().NextDouble() >= 0.5, false);
-		}
-		else if (first_rod_appeared && rod_number < max_rod_number && second % 30 == 0)
-		{
-			Debug.WriteLine("Adding rod");
-			rod_number++;
-			AddRod(new Random().NextDouble() >= 0.5, new Random().NextDouble() >= 0.5);
-		}
-
-		if(rod_number >= max_rod_number)
-		{
-			Debug.WriteLine("======AlphaFish UNLOCKED!!!"); // TODO
-			if (!Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.AlphaFishUnlocked)
+			if (!first_rod_appeared && minute >= 0 && second >= 5)
 			{
-				Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.AlphaFishUnlocked = true;
-				Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.Save();
+				Debug.WriteLine("Adding first rod");
+				first_rod_appeared = true;
+				rod_number++;
+				AddRod(new Random().NextDouble() >= 0.5, false);
+			}
+			else if (first_rod_appeared && rod_number < max_rod_number && second % 30 == 0)
+			{
+				Debug.WriteLine("Adding rod");
+				rod_number++;
+				AddRod(new Random().NextDouble() >= 0.5, new Random().NextDouble() >= 0.5);
+			}
+
+			if (rod_number >= max_rod_number)
+			{
+				Debug.WriteLine("======AlphaFish UNLOCKED!!!"); // TODO
+				if (!Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.AlphaFishUnlocked)
+				{
+					Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.AlphaFishUnlocked = true;
+					Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.Save();
+				}
 			}
 		}
 

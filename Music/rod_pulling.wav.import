@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/rod_pulling.wav-3d20a09460a22475c90ab8289e4563b0.sample"
+
+[deps]
+
+source_file="res://Music/rod_pulling.wav"
+dest_files=[ "res://.import/rod_pulling.wav-3d20a09460a22475c90ab8289e4563b0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

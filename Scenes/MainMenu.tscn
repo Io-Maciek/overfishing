@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Fonts/Gluten/static/Gluten-Light.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Menu/LoadDirectoryInit.cs" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Scripts/Menu/FishLoaderScript.cs" type="Script" id=8]
 [ext_resource path="res://Scripts/Menu/PanelAboutScript.cs" type="Script" id=9]
 [ext_resource path="res://Fonts/Schoolbell/Schoolbell-Regular.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Music/fishing.mp3" type="AudioStream" id=11]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -266,6 +267,11 @@ SPACE or A/X key to use ability,
 trash will slow you down,
 being caught on fishing rod will kill you"
 autowrap = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 11 )
+autoplay = true
 
 [connection signal="pressed" from="MainPanel/BtnStartGame" to="MainPanel" method="_on_BtnStartGame_pressed"]
 [connection signal="pressed" from="MainPanel/BtnGoToOptions" to="MainPanel" method="_on_BtnGoToOptions_pressed"]

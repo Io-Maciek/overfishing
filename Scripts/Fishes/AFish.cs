@@ -17,7 +17,10 @@ namespace Overfishing.Scripts.Fishes
         public abstract ulong AbilityCooldown { get; }
         public abstract float AbilityUseTime { get; }
 
-        public abstract void Ability(Node2D GameSceneRoot);
+        public virtual void Ability(Node2D GameSceneRoot)
+        {
+            GetYourself(GameSceneRoot).audio.Play();
+        }
 
         public virtual string SpriteFullPath()
         {
