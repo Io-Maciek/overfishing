@@ -17,7 +17,7 @@ public class fishing_rod : Node2D
 	bool kill_animation = false;
 
 
-    Texture rod_texture;
+	Texture rod_texture;
 	Texture bait_texture;
 
 	Vector2 MoveToPosition;
@@ -28,24 +28,22 @@ public class fishing_rod : Node2D
 	CanvasItemMaterial material;
 	bool affected_by_light = false;
 
-	public void ToggleAffectLight()
+	public void ToggleAffectLightRod()
 	{
 		Debug.WriteLine("TOGGLE LIGHT TO ROD");
-        affected_by_light = !affected_by_light;
+		affected_by_light = !affected_by_light;
 
-        if (affected_by_light)
-			material.LightMode = CanvasItemMaterial.LightModeEnum.LightOnly;
+		if (affected_by_light)
+			(Material as CanvasItemMaterial).LightMode = CanvasItemMaterial.LightModeEnum.LightOnly;
 		else
-			material.LightMode = CanvasItemMaterial.LightModeEnum.Normal;
+			(Material as CanvasItemMaterial).LightMode = CanvasItemMaterial.LightModeEnum.Normal;
 
-    }
+	}
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		rod_texture = (GetNode("Rod1") as Sprite).Texture;
 		bait_texture = (GetNode("Bait3") as Sprite).Texture;
-		material = Material as CanvasItemMaterial;
-		material.LightMode = CanvasItemMaterial.LightModeEnum.Normal;
 
 		//Randomize(false, false); //TODO
 	}
@@ -60,7 +58,7 @@ public class fishing_rod : Node2D
 		is_flipped = flipped_y;
 		number = rod_number;
 
-        _image_chosen = true;
+		_image_chosen = true;
 		var r = new Random().Next(1, 4);
 		var b = new Random().Next(1, 4);
 		Debug.WriteLine($"{number}.\tWylosowano rod: {r} oraz bait {b}");
@@ -131,9 +129,9 @@ public class fishing_rod : Node2D
 					catch_fish.KillAndDisappear();//.QueueFree();
 					kill_animation = false;
 					catch_fish = null;
-                }
-            }
-            GoToNext();// TODO idk
+				}
+			}
+			GoToNext();// TODO idk
 		}
 	}
 
@@ -171,7 +169,7 @@ public class fishing_rod : Node2D
 	//  }
 
 	PlayerScript catch_fish = null;
-    private void _on_Area2D_body_entered(object body)
+	private void _on_Area2D_body_entered(object body)
 	{
 		if (kill_animation)
 			return;
@@ -188,16 +186,16 @@ public class fishing_rod : Node2D
 			return;
 
 		catch_fish = player;
-        catch_fish.Kill(this);
+		catch_fish.Kill(this);
 		HandleStartKillAnimation();
 	}
 
-    private void HandleStartKillAnimation()
-    {
+	private void HandleStartKillAnimation()
+	{
 		kill_animation = true;
-        MoveToPosition = new Vector2(Position.x, is_flipped?y_range_start_up:y_range_start_down);
-        _direction = Position.DirectionTo(MoveToPosition);
-    }
+		MoveToPosition = new Vector2(Position.x, is_flipped?y_range_start_up:y_range_start_down);
+		_direction = Position.DirectionTo(MoveToPosition);
+	}
 }
 
 

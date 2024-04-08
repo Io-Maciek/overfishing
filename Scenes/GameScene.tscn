@@ -636,4 +636,5 @@ shape = SubResource( 9 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 80
 
+[connection signal="TimeStopsEventHandler" from="." to="CanvasLayer3/TimeLabel" method="_on_Scene_TimeStopsEventHandler"]
 [connection signal="TimeUpdateEventHandler" from="CanvasLayer3/TimeLabel" to="." method="_TimeLabel_TimeUpdated"]
