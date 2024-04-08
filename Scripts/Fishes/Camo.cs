@@ -11,18 +11,33 @@ namespace Overfishing.Scripts.Fishes
     {
         public override string SpriteName => "camo";
 
-        public override string ActionDescription => "Can't be hooked on fishing rod for X seconds.";
+        public override ulong AbilityCooldown => 60_000;
+
+        public override float AbilityUseTime => 8.0f;
+
+
+        public override string ActionDescription => $"Can't be hooked on fishing rod for {Mathf.RoundToInt(AbilityUseTime)} seconds.";
 
 
         string _name = "Camo";
         public override string Name { get => _name; set => _name = value; }
 
-        public override ulong AbilityCooldown => throw new NotImplementedException();
-
-        public override float AbilityUseTime => throw new NotImplementedException();
+        private ulong TimerOfNextAbility = 0;
 
         public override void Ability(Node2D GameSceneRoot)
         {
+            if (Time.GetTicksMsec() < TimerOfNextAbility)
+                return;
+
+            TimerOfNextAbility = Time.GetTicksMsec() + AbilityCooldown;
+
+
+            var you = (PlayerScriptCamo)GetYourself(GameSceneRoot);
+            you.UseAbility();
+
+            you.abilityTimer.WaitTime = AbilityUseTime;
+            you.abilityTimer.OneShot = true;
+            you.abilityTimer.Start();
         }
     }
 }

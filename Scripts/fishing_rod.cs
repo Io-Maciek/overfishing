@@ -3,6 +3,7 @@ using Overfishing.Statics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 public class fishing_rod : Node2D
 {
@@ -131,7 +132,7 @@ public class fishing_rod : Node2D
 			{
 				if(catch_fish != null)
 				{
-					catch_fish.KillAndDisappear();//.QueueFree();
+					catch_fish.KillAndDisappear(this);//.QueueFree();
 					kill_animation = false;
 					catch_fish = null;
 				}
@@ -161,24 +162,10 @@ public class fishing_rod : Node2D
 
 		if(new Random().NextDouble() >= 0.55)
 		{
-			var alive_players = new List<PlayerScript>();
+			var alive_players = (GetTree().Root.GetNode("Scene").GetNode("SceneLoader") as PlayersInit)
+				.Players.Where(x=>x.IsAlive).ToList();
 
 
-			for (int i = 0; i < GameStaticInfo._PLAYERS.Count; i++)
-			{
-				try
-				{
-					var player_parent = (Node2D)playerCanvas.GetNode($"Player{i}");
-					var player = player_parent.GetNode("Player") as PlayerScript;
-
-					if (player.IsAlive)
-						alive_players.Add(player);
-				}
-				catch (Exception)
-				{
-					continue;
-				}
-            }
 
 			if(alive_players.Count==0)
 			{
@@ -235,6 +222,17 @@ new Random().Next(y_range[0], y_range[1] + 1);
 
 		if (!player.IsAlive)
 			return;
+
+
+		if(player is PlayerScriptCamo)
+		{
+			var camo = (PlayerScriptCamo)player;
+			if (!camo.CanBeHooked)
+			{
+				Debug.WriteLine("===CAMO DODGED");
+				return;
+			}
+		}
 
 		catch_fish = player;
 		catch_fish.Kill(this);

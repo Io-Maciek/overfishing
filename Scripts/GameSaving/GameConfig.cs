@@ -14,11 +14,12 @@ namespace Overfishing.GameSaving
 
 		public bool IsFullScreen { get; set; }
 		public bool AlphaFishUnlocked { get; set; }
+		public bool CamoFishUnlocked { get; set; }
 		
 
 		public static GameConfig CreateDefault()
 		{
-			return new GameConfig { IsFullScreen = true, AlphaFishUnlocked = false };
+			return new GameConfig { IsFullScreen = true, AlphaFishUnlocked = false, CamoFishUnlocked = false };
 		}
 
 		internal static GameConfig Load()

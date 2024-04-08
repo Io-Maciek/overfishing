@@ -33,7 +33,7 @@ public class PlayerScriptLantern : PlayerScript
 
     private void _lantern_ability_over()
     {
-        foreach (var others in fish.GetOthers(null))
+        foreach (var others in fish.GetOthers(GetTree().Root.GetNode("Scene") as Node2D))
         {
             (((Sprite)others.GetNode("Sprite")).Material as CanvasItemMaterial).LightMode = CanvasItemMaterial.LightModeEnum.Normal;
         }

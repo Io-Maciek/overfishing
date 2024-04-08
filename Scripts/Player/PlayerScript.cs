@@ -127,20 +127,22 @@ public class PlayerScript : KinematicBody2D
     internal void Kill(fishing_rod rod)
     {
         IsAlive = false;
-        Debug.WriteLine(Position);
-        _parent = GetParent();
+        _parent = GetParent().GetParent();
+        Debug.WriteLine(_parent+"\t\t\t"+GetParent());
 
-        _parent.RemoveChild(this);
-        rod.CallDeferred("add_child", this);
+        _parent.RemoveChild(GetParent());
+        rod.CallDeferred("add_child", GetParent());
         Position = new Vector2(24, -1128);
         Debug.WriteLine(Position);
 
         EmitSignal("KillPlayerEventHandler", this);
     }
 
-    public void KillAndDisappear()
+    public void KillAndDisappear(fishing_rod rod)
     {
-        GetParent().RemoveChild(this);
+        Debug.WriteLine(GetParent() + "\t\t KILL\t\t"+ _parent);
+
+        rod.RemoveChild(GetParent());
         _parent.CallDeferred("add_child", this);
         Position = new Vector2(-9999, -9999);
     }

@@ -1,7 +1,9 @@
 using Godot;
+using Overfishing.Statics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 public class GameObserver : Node2D
 {
@@ -98,7 +100,23 @@ public class GameObserver : Node2D
 
 		if (diff == condition)
 		{
-			Debug.WriteLine("KONIEC GRY");
+			var players = (GetNode("SceneLoader") as PlayersInit).Players;
+			var winner = players[0];
+
+			if (condition != 0)
+			{
+				winner = players.Where(x => x.IsAlive).First();
+			}
+
+
+			GetNode("CanvasLayer3").GetNode("Pause").QueueFree();
+			(GetNode("CanvasLayer5").GetNode("EndGame") as EndGameScript).ShowMe(winner);
+			Debug.WriteLine("KONIEC GRY, === CAMO FISH UNLOCKED");
+			if (!Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.CamoFishUnlocked)
+			{
+				Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.CamoFishUnlocked = true;
+				Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.Save();
+			}
 			EmitSignal("TimeStopsEventHandler");
 		}
 	}
@@ -122,6 +140,16 @@ public class GameObserver : Node2D
 			Debug.WriteLine("Adding rod");
 			rod_number++;
 			AddRod(new Random().NextDouble() >= 0.5, new Random().NextDouble() >= 0.5);
+		}
+
+		if(rod_number >= max_rod_number)
+		{
+			Debug.WriteLine("======AlphaFish UNLOCKED!!!"); // TODO
+			if (!Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.AlphaFishUnlocked)
+			{
+				Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.AlphaFishUnlocked = true;
+				Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.Save();
+			}
 		}
 
 		AddTrash(); //TODO

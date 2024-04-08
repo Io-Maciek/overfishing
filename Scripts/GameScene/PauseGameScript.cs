@@ -92,6 +92,3 @@ public class PauseGameScript : Control
 		(GetNode("OptionsScreen") as OptionsScreenScript).ShowOptions(GetNode("MainPanel") as Control);
 	}
 }
-
-
-

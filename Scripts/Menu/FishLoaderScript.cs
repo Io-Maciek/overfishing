@@ -48,6 +48,9 @@ internal class FishLoaderScript : Node
         if (_c.AlphaFishUnlocked)
             bonus.Add(new AlphaFish());
 
+        if (_c.CamoFishUnlocked)
+            bonus.Add(new Camo());
+
         return bonus;
     }
 
@@ -59,7 +62,6 @@ internal class FishLoaderScript : Node
             new Nemo(),
             new PufferFish(),
             new Lanternfish(),
-            //new Camo(),
         };
     }
 }

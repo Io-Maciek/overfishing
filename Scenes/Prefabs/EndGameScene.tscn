@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Prefabs/ButtonPref.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/GameScene/EndGameScript.cs" type="Script" id=4]
+
+[node name="EndGame" type="Control"]
+pause_mode = 2
+visible = false
+script = ExtResource( 4 )
+
+[node name="MainPanel" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="BtnBackToMenu" parent="MainPanel" instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -172.0
+margin_top = 600.0
+margin_right = 132.0
+margin_bottom = 675.0
+text = "quit"
+
+[connection signal="pressed" from="MainPanel/BtnBackToMenu" to="." method="_on_BtnBackToMenu_pressed"]

@@ -36,62 +36,35 @@ namespace Overfishing.Scripts.Fishes
             return Name;
         }
 
-
-        private PlayerScript You = null;
-        private List<PlayerScript> Others = null;
-
         public PlayerScript GetYourself(Node2D RootNode)
         {
-            if(Others == null)
-            {
-                //Debug.WriteLine("TWORZY INNYCH");
-                Others = new List<PlayerScript>();
-            }
-            else
-            {
-                //Debug.WriteLine("INNI Z PAMIECI");
-            }
+            var players = (RootNode.GetNode("SceneLoader") as PlayersInit).Players.Where(x=>x.IsAlive).ToList();
 
-            if (You != null)
+            for (int i = 0; i < players.Count; i++)
             {
-                //Debug.WriteLine("ZWRACAM CIEBIE Z PAMIECI\t"+You);
-                return You;
-            }
-            else
-            {
-                //Debug.WriteLine("TWORZE CIEBIE\t" + You);
-            }
-            PlayerScript u = null;
-
-            for (int i = 0; i < GameStaticInfo._PLAYERS.Count; i++)
-            {
-                var root = RootNode.GetNode("CanvasLayer").GetNode("Player"+i);
-                if (root == null)
-                    continue;
-
-                var player_from_root = root.GetNode("Player") as PlayerScript;
-                if (player_from_root == null)
-                    continue;
-                
-
-                var you_are_this_fish = player_from_root.fish == this;
-
-                //Debug.WriteLine(you_are_this_fish+"\t\t"+player_from_root);
-                if (you_are_this_fish)
+                if (players[i].fish == this)
                 {
-                    You = player_from_root;
-                    u = You;
+                    return players[i];
                 }
-                else
-                    Others.Add(player_from_root);
             }
 
-            return u;
+            return null;
         }
 
         public List<PlayerScript> GetOthers(Node2D RootNode)
         {
-            GetYourself(RootNode);
+            var Others = new List<PlayerScript>();
+
+            var players = (RootNode.GetNode("SceneLoader") as PlayersInit).Players.Where(x => x.IsAlive).ToList();
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                if (players[i].fish != this)
+                {
+                    Others.Add(players[i]);
+                }
+            }
+
             return Others;
         }
 
