@@ -12,7 +12,7 @@ config_version=4
 
 config/name="Overfishing"
 run/main_scene="res://Scenes/MainMenu.tscn"
-config/icon="res://icon.png"
+config/icon="res://Images/icon.png"
 
 [display]
 
