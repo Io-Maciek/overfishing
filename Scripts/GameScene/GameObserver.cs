@@ -117,7 +117,7 @@ public class GameObserver : Node2D
 
 
 			GetNode("CanvasLayer3").GetNode("Pause").QueueFree();
-			(GetNode("CanvasLayer5").GetNode("EndGame") as EndGameScript).ShowMe(winner);
+			(GetNode("CanvasLayer5").GetNode("EndGame") as EndGameScript).ShowMe(winner, condition != 0);
 			Debug.WriteLine("KONIEC GRY, === CAMO FISH UNLOCKED");
 			if (!Overfishing.Statics.GameStaticInfo._CONFIG_INSTANCE.CamoFishUnlocked)
 			{

@@ -19,12 +19,13 @@ public class EndGameScript : Control
 	}
 
 
-	public void ShowMe(PlayerScript winner)
+	public void ShowMe(PlayerScript winner, bool delete_player=true)
 	{
 		string path = winner.fish.SpriteFullPath();
-		winner.QueueFree();
-        //GetTree().Paused = true;
-        winner_sprite.Texture = ResourceLoader.Load<Texture>(path);
+		if(delete_player)
+			winner.QueueFree();
+		//GetTree().Paused = true;
+		winner_sprite.Texture = ResourceLoader.Load<Texture>(path);
 		Visible = true;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 	}
