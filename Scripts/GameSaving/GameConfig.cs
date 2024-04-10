@@ -26,7 +26,7 @@ namespace Overfishing.GameSaving
         {
             if (GameStaticInfo._CONFIG_INSTANCE == null)
             {
-                if (OS.GetName() == "HTML5")
+                if (OS.GetName() == "HTML5") // << ONLY FOR WEB BUILD
                 {
                     var _config = new Godot.File();
                     if (_config.FileExists(_APPDATA_FILE_PATH))
@@ -38,8 +38,8 @@ namespace Overfishing.GameSaving
                     }
                     else
                         GameStaticInfo._CONFIG_INSTANCE = GameConfig.CreateDefault();
-                }
-                else
+                } // >> ONLY FOR WEB BUILD
+                else // ANY OTHER BUILD <<
                 {
                     GameDirectory.CheckExistanceOfAppdataDirectory();
 
@@ -49,11 +49,8 @@ namespace Overfishing.GameSaving
                         GameStaticInfo._CONFIG_INSTANCE = configReadFromFile;
                     }
                     else
-                    {
                         GameStaticInfo._CONFIG_INSTANCE = GameConfig.CreateDefault();
-                        //GameStaticInfo._CONFIG_INSTANCE.Save();
-                    }
-                }
+                } // ANY OTHER BUILD >>
             }
 
             return GameStaticInfo._CONFIG_INSTANCE;
