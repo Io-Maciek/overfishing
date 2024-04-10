@@ -307,7 +307,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 3 )
 shader_param/WATER_COL = Color( 0.04, 0.38, 0.88, 1 )
-shader_param/WATER2_COL = Color( 0.00784314, 0.329412, 0.596078, 1 )
+shader_param/WATER2_COL = Color( 0.04, 0.35, 0.78, 1 )
 shader_param/FOAM_COL = Color( 0.8125, 0.9609, 0.9648, 1 )
 shader_param/distortion_speed = 1.0
 shader_param/tile = Vector2( 10, 10 )
@@ -652,6 +652,7 @@ layer = 80
 pause_mode = 2
 stream = ExtResource( 16 )
 autoplay = true
+bus = "Music"
 
 [connection signal="TimeStopsEventHandler" from="." to="CanvasLayer3/TimeLabel" method="_on_Scene_TimeStopsEventHandler"]
 [connection signal="TimeUpdateEventHandler" from="CanvasLayer3/TimeLabel" to="." method="_TimeLabel_TimeUpdated"]

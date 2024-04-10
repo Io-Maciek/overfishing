@@ -85,10 +85,12 @@ script = ExtResource( 2 )
 [node name="hover" type="AudioStreamPlayer" parent="Node"]
 stream = SubResource( 7 )
 volume_db = -5.0
+bus = "SFX"
 
 [node name="click" type="AudioStreamPlayer" parent="Node"]
 stream = SubResource( 6 )
 volume_db = -5.0
+bus = "SFX"
 
 [connection signal="mouse_entered" from="." to="Node" method="_on_Button_mouse_entered"]
 [connection signal="pressed" from="." to="Node" method="_on_Button_pressed"]

@@ -14,13 +14,18 @@ namespace Overfishing.GameSaving
 
         public bool IsFullScreen { get; set; }
         public float MasterAudioVolume { get; set; }
+        public float MusicAudioVolume { get; set; }
+        public float SFXAudioVolume { get; set; }
         public bool AlphaFishUnlocked { get; set; }
         public bool CamoFishUnlocked { get; set; }
 
 
         public static GameConfig CreateDefault()
         {
-            return new GameConfig { IsFullScreen = true, AlphaFishUnlocked = false, CamoFishUnlocked = false, MasterAudioVolume = 1.0f };
+            return new GameConfig { IsFullScreen = true, AlphaFishUnlocked = false,
+                CamoFishUnlocked = false, MasterAudioVolume = 1.0f, SFXAudioVolume = 1.0f,
+                MusicAudioVolume = 1.0f
+            };
         }
 
         internal static GameConfig Load()
@@ -78,6 +83,8 @@ namespace Overfishing.GameSaving
         {
             OS.WindowFullscreen = IsFullScreen;
             AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Master"), Mathf.Log(MasterAudioVolume) * 8.6858896380650365530225783783321f);
+            AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Music"), Mathf.Log(MusicAudioVolume) * 8.6858896380650365530225783783321f);
+            AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("SFX"), Mathf.Log(SFXAudioVolume) * 8.6858896380650365530225783783321f);
         }
 
         public override string ToString()

@@ -272,6 +272,7 @@ autowrap = true
 pause_mode = 2
 stream = ExtResource( 11 )
 autoplay = true
+bus = "Music"
 
 [connection signal="pressed" from="MainPanel/BtnStartGame" to="MainPanel" method="_on_BtnStartGame_pressed"]
 [connection signal="pressed" from="MainPanel/BtnGoToOptions" to="MainPanel" method="_on_BtnGoToOptions_pressed"]
