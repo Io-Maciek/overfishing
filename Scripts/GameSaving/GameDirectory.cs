@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.IO;
+using Godot;
 using Overfishing.Statics;
 
 namespace Overfishing.GameSaving
@@ -10,9 +12,18 @@ namespace Overfishing.GameSaving
 
 		static GameDirectory()
 		{
-			var appdata_path = System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-			_APPDATA_PATH = Path.Combine(appdata_path, GameStaticInfo._GAME_DIRECTORY_NAME);
-			GameConfig._APPDATA_FILE_PATH = Path.Combine(_APPDATA_PATH, GameConfig._FILENAME);
+			if(OS.GetName() == "HTML5")
+			{
+                _APPDATA_PATH = @"user://";
+				GameConfig._APPDATA_FILE_PATH = $"{_APPDATA_PATH}{GameConfig._FILENAME}";
+
+            }
+            else
+			{
+                var appdata_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+                _APPDATA_PATH = System.IO.Path.Combine(appdata_path, GameStaticInfo._GAME_DIRECTORY_NAME);
+                GameConfig._APPDATA_FILE_PATH = System.IO.Path.Combine(_APPDATA_PATH, GameConfig._FILENAME);
+            }
 		}
 
 		public static GameConfig LoadConfig()
@@ -22,11 +33,14 @@ namespace Overfishing.GameSaving
 
 		public static bool CheckExistanceOfAppdataDirectory(bool shouldCreateIfNone = true)
 		{
-			bool do_exist = Directory.Exists(_APPDATA_PATH);
+			if (OS.GetName() == "HTML5")
+				return true;
+
+            bool do_exist = System.IO.Directory.Exists(_APPDATA_PATH);
 
 			if (shouldCreateIfNone && !do_exist)
 			{
-				Directory.CreateDirectory(_APPDATA_PATH);
+                System.IO.Directory.CreateDirectory(_APPDATA_PATH);
 				return true;
 			}
 
