@@ -13,13 +13,14 @@ namespace Overfishing.GameSaving
         public static string _APPDATA_FILE_PATH;
 
         public bool IsFullScreen { get; set; }
+        public float MasterAudioVolume { get; set; }
         public bool AlphaFishUnlocked { get; set; }
         public bool CamoFishUnlocked { get; set; }
 
 
         public static GameConfig CreateDefault()
         {
-            return new GameConfig { IsFullScreen = true, AlphaFishUnlocked = false, CamoFishUnlocked = false };
+            return new GameConfig { IsFullScreen = true, AlphaFishUnlocked = false, CamoFishUnlocked = false, MasterAudioVolume = 1.0f };
         }
 
         internal static GameConfig Load()
@@ -76,6 +77,7 @@ namespace Overfishing.GameSaving
         internal void Apply()
         {
             OS.WindowFullscreen = IsFullScreen;
+            AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Master"), Mathf.Log(MasterAudioVolume) * 8.6858896380650365530225783783321f);
         }
 
         public override string ToString()

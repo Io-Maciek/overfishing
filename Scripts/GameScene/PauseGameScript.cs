@@ -80,7 +80,7 @@ public class PauseGameScript : Control
 
 	private void _on_BtnBackToMenu_pressed()
 	{
-		GameStaticInfo._PLAYERS = null;
+		//GameStaticInfo._PLAYERS = null;
 		GetTree().Paused = false;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
 

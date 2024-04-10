@@ -69,7 +69,7 @@ public class trash_script : Node2D
 
 		if(Position.x <= -100)
 		{
-			Debug.WriteLine("NISCZE SMIECI");
+			//Debug.WriteLine("NISCZE SMIECI");
 			gameObserver.DeleteMe(this);
 		}
 	}

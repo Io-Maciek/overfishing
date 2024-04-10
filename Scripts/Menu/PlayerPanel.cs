@@ -1,6 +1,7 @@
 using Godot;
 using Overfishing.Player;
 using System;
+using System.Diagnostics;
 
 public class PlayerPanel : Control
 {
@@ -12,7 +13,7 @@ public class PlayerPanel : Control
 
 	public override void _Ready()
 	{
-		PlayerName = (Label)GetNode("PlayerName");
+		/*PlayerName = (Label)GetNode("PlayerName");
 		PlayerName.Text = "";
 		Arrows = (Control)GetNode("Arrows");
 		Arrows.Visible = false;
@@ -26,12 +27,36 @@ public class PlayerPanel : Control
 		animation = GetNode("AnimationPlayer") as AnimationPlayer;
 
 
-		fishTexture.RectPivotOffset = this.RectSize / 2.0f;
+		fishTexture.RectPivotOffset = this.RectSize / 2.0f;*/
 	}
+
+	bool was_set = false;
+	public void Set()
+	{
+		if(was_set) return;
+
+        PlayerName = (Label)GetNode("PlayerName");
+        PlayerName.Text = "";
+        Arrows = (Control)GetNode("Arrows");
+        Arrows.Visible = false;
+
+        Description = (Label)GetNode("description");
+        Description.Text = "";
+
+        fishTexture = GetNode("FishTexture") as TextureRect;
+        fishTexture.Texture = null;
+
+        animation = GetNode("AnimationPlayer") as AnimationPlayer;
+
+
+        fishTexture.RectPivotOffset = this.RectSize / 2.0f;
+    }
 
 	public void SetPlayer(PlayerUIModel player = null)
 	{
-		if (player == null)
+		Set();
+
+        if (player == null)
 		{
 			PlayerName.Text = string.Empty;
 			fishTexture.Texture = null;

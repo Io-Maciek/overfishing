@@ -19,13 +19,7 @@ public class PlayerInputs : Control
 
     public override void _Ready()
     {
-        MainScreen = (Control)GetParent().GetNode("MainPanel");
-        btnStartGame = (Button)GetNode("BtnStartGame");
-        btnStartGame.Disabled = true;
-        btnStartGame.FocusMode = FocusModeEnum.None;
 
-        fishLoader = (FishLoaderScript)GetNode("FishLoader");
-        //Debug.WriteLine($"{String.Join(" ", fishLoader.AvailableFishes.Select(x=>x.SpriteFullPath()))}");
 
 
     }
@@ -144,7 +138,7 @@ public class PlayerInputs : Control
             {
                 _deletePlayer(changedPlayer);
             }
-            else if(Players.Where(x=>x != null).Count() < 4) // add player
+            else if (Players.Where(x => x != null).Count() < 4) // add player
             {
                 _addPlayer(deviceName);
             }
@@ -244,27 +238,57 @@ public class PlayerInputs : Control
 
     private void _on_BtnBackToMenu_pressed()
     {
+        Players.Clear();
         MainScreen.Visible = true;
         Visible = false;
     }
 
     private void _on_BtnStartGame_pressed()
     {
-        GameStaticInfo._PLAYERS = Players;
+        GameStaticInfo._PLAYERS = new List<PlayerUIModel>(Players);
         GameStaticInfo._PLAYERS.RemoveAll(x => x == null);
+        Players.Clear();
 
         GetTree().ChangeScene("res://Scenes/GameScene.tscn");
     }
 
-    internal void ShowScreen(MainPanelScript mainPanelScript)
+    internal void ShowScreen(MainPanelScript mainPanelScript, bool playersExists = false)
     {
+        MainScreen = (Control)GetParent().GetNode("MainPanel");
+        btnStartGame = (Button)GetNode("BtnStartGame");
+        btnStartGame.Disabled = true;
+        btnStartGame.FocusMode = FocusModeEnum.None;
+
+        fishLoader = (FishLoaderScript)GetNode("FishLoader");
+        //Debug.WriteLine($"{String.Join(" ", fishLoader.AvailableFishes.Select(x=>x.SpriteFullPath()))}");
+
         fishLoader.LoadFish();
 
-        for (int i = 0; i < 4; i++)
+        if (!playersExists)
         {
-            Players.Add(null);
-            playerPanels[i] = (PlayerPanel)GetNode($"Player{i + 1}");
+            for (int i = 0; i < 4; i++)
+            {
+                Players.Add(null);
+                playerPanels[i] = (PlayerPanel)GetNode($"Player{i + 1}");
+            }
         }
+        else
+        {
+            Players = new List<PlayerUIModel>(GameStaticInfo._PLAYERS);
+            GameStaticInfo._PLAYERS = null;
+
+            var how_many_players = Players.Count;
+            for (int i = 0; i < 4; i++)
+            {
+                if(i>= how_many_players)
+                {
+                    Players.Add(null);
+                }
+
+                playerPanels[i] = (PlayerPanel)GetNode($"Player{i + 1}");
+            }
+        }
+
         UpdatePlayers();
 
         Visible = true;

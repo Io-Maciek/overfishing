@@ -17,7 +17,7 @@ public class ButtonSounds : Node
 
 	private void _on_Button_pressed()
 	{
-        click_audio.Play();
+		click_audio.Play();
 	}
 
 

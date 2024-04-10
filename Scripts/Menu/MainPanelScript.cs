@@ -17,14 +17,24 @@ public class MainPanelScript : Control
         aboutScreen = (PanelAboutScript)GetParent().GetNode("PanelAbout");
 		playerChooseScreen.Visible = false;
 		aboutScreen.Visible = false;
-		Visible = true;
+		
 
         optionScreen = (OptionsScreenScript)GetParent().GetNode("OptionsScreen");
+
+		if(GameStaticInfo._PLAYERS != null)
+		{
+			Visible = false;
+            playerChooseScreen.ShowScreen(this, true);
+		}
+		else
+		{
+            Visible = true;
+        }
 	}
 
 	private void _on_BtnStartGame_pressed()
 	{
-		playerChooseScreen.ShowScreen(this);
+		playerChooseScreen.ShowScreen(this, false);
 	}
 
 

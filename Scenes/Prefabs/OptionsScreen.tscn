@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Options/OptionsScreenScript.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/ButtonPref.tscn" type="PackedScene" id=2]
@@ -57,6 +57,22 @@ corner_radius_bottom_left = 75
 corner_detail = 3
 shadow_color = Color( 0, 0, 0, 0 )
 
+[sub_resource type="StyleBoxLine" id=8]
+color = Color( 0.988235, 0.145098, 0.188235, 1 )
+grow_begin = -5.0
+grow_end = -6.0
+thickness = 5
+
+[sub_resource type="StyleBoxLine" id=11]
+color = Color( 0.780392, 0, 0.0392157, 1 )
+grow_begin = -5.0
+thickness = 5
+
+[sub_resource type="StyleBoxLine" id=10]
+color = Color( 0.780392, 0, 0.0392157, 1 )
+grow_begin = -5.0
+thickness = 5
+
 [node name="OptionsScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -75,9 +91,9 @@ text = "back"
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -120.0
-margin_top = 432.0
+margin_top = 400.0
 margin_right = -120.0
-margin_bottom = 432.0
+margin_bottom = 400.0
 
 [node name="Label" type="Label" parent="FullScreenToggle"]
 anchor_left = 0.5
@@ -106,5 +122,41 @@ custom_styles/normal = ExtResource( 4 )
 align = 1
 icon_align = 1
 
+[node name="VolumeSlider" type="Control" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -144.0
+margin_top = 300.0
+margin_right = -104.0
+margin_bottom = 340.0
+
+[node name="Label" type="Label" parent="VolumeSlider"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -24.0
+margin_right = 272.0
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 1 )
+text = "volume"
+
+[node name="HSlider" type="HSlider" parent="VolumeSlider/Label"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -140.0
+margin_top = -9.5
+margin_right = -4.0
+margin_bottom = 6.5
+custom_styles/slider = SubResource( 8 )
+custom_styles/grabber_area_highlight = SubResource( 11 )
+custom_styles/grabber_area = SubResource( 10 )
+max_value = 1.0
+step = 0.1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
 [connection signal="pressed" from="BtnBackToMenu" to="." method="_on_BtnBackToMenu_pressed"]
 [connection signal="toggled" from="FullScreenToggle/Label/CheckButton" to="." method="_on_fullscreen_toggled"]
+[connection signal="value_changed" from="VolumeSlider/Label/HSlider" to="." method="_on_volume_slider_value_changed"]
