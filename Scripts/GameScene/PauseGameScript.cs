@@ -56,7 +56,8 @@ public class PauseGameScript : Control
 	private void UnPauseGame()
 	{
 		Debug.WriteLine("UNPAUSED BY: " + pauseMaster);
-		_env.Environment.DofBlurNearEnabled = false;
+        GameStaticInfo._CONFIG_INSTANCE.Save();
+        _env.Environment.DofBlurNearEnabled = false;
 		MainPanel.Visible = false;
 		(GetNode("OptionsScreen") as OptionsScreenScript).Visible = false;
 
