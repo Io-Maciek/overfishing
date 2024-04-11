@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scripts/GameScene/PlayersInit.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/PauseScene.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Scenes/Prefabs/EndGameScene.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scripts/GameScene/GameObserver.cs" type="Script" id=15]
 [ext_resource path="res://Music/fishing.mp3" type="AudioStream" id=16]
+[ext_resource path="res://Music/river.mp3" type="AudioStream" id=17]
 
 [sub_resource type="DynamicFont" id=5]
 size = 50
@@ -653,6 +654,12 @@ pause_mode = 2
 stream = ExtResource( 16 )
 autoplay = true
 bus = "Music"
+
+[node name="River" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 17 )
+volume_db = -15.0
+autoplay = true
+bus = "SFX"
 
 [connection signal="TimeStopsEventHandler" from="." to="CanvasLayer3/TimeLabel" method="_on_Scene_TimeStopsEventHandler"]
 [connection signal="TimeUpdateEventHandler" from="CanvasLayer3/TimeLabel" to="." method="_TimeLabel_TimeUpdated"]

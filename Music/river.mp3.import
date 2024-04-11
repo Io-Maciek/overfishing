@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/river.mp3-09aa61d6dfb20c62122df22129c47029.mp3str"
+
+[deps]
+
+source_file="res://Music/river.mp3"
+dest_files=[ "res://.import/river.mp3-09aa61d6dfb20c62122df22129c47029.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

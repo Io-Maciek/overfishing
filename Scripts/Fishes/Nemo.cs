@@ -27,9 +27,10 @@ namespace Overfishing.Scripts.Fishes
 
         public override void Ability(Node2D GameSceneRoot)
         {
-            base.Ability(GameSceneRoot);
             if (Time.GetTicksMsec() < TimerOfNextAbility)
                 return;
+            base.Ability(GameSceneRoot);
+
             TimerOfNextAbility = Time.GetTicksMsec() + AbilityCooldown;
 
             Debug.WriteLine("===NEMO ABILITY:");
