@@ -50,8 +50,8 @@ public class fishing_rod : Node2D
 	{
 		rod_texture = (GetNode("Rod1") as Sprite).Texture;
 		bait_texture = (GetNode("Bait3") as Sprite).Texture;
-        //Randomize(false, false); //TODO
-    }
+		//Randomize(false, false); //TODO
+	}
 
 	int number = 0;
 	Node playerCanvas;
@@ -62,9 +62,9 @@ public class fishing_rod : Node2D
 			return;
 
 
-        pulling_rod = GetNode("pulling_out") as AudioStreamPlayer2D;
-        catching_rod = GetNode("catching") as AudioStreamPlayer2D;
-        this.playerCanvas = gameObserver.GetNode("CanvasLayer");
+		pulling_rod = GetNode("pulling_out") as AudioStreamPlayer2D;
+		catching_rod = GetNode("catching") as AudioStreamPlayer2D;
+		this.playerCanvas = gameObserver.GetNode("CanvasLayer");
 
 		is_flipped = flipped_y;
 		number = rod_number;
@@ -105,7 +105,7 @@ public class fishing_rod : Node2D
 		_direction = Position.DirectionTo(MoveToPosition);
 		pulling_rod.Play();
 
-        Debug.WriteLine($"{number}.\tPostion generated: " + MoveToPosition + "\tWith speed: " + Speed + "\tThe direction is: " + _direction);
+		Debug.WriteLine($"{number}.\tPostion generated: " + MoveToPosition + "\tWith speed: " + Speed + "\tThe direction is: " + _direction);
 	}
 
 	Vector2 _direction;
@@ -248,8 +248,8 @@ new Random().Next(y_range[0], y_range[1] + 1);
 			}
 		}
 
-        catching_rod.Play();
-        catch_fish = player;
+		catching_rod.Play();
+		catch_fish = player;
 		catch_fish.Kill(this);
 		HandleStartKillAnimation();
 	}
