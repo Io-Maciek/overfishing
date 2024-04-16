@@ -17,6 +17,10 @@ boot_splash/fullsize=false
 boot_splash/use_filter=false
 config/icon="res://Images/icon.png"
 
+[autoload]
+
+MusicControllerScene="*res://Scenes/MusicControllerScene.tscn"
+
 [display]
 
 window/size/width=1280

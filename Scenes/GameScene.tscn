@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scripts/GameScene/PlayersInit.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Prefabs/PauseScene.tscn" type="PackedScene" id=2]
@@ -15,7 +15,6 @@
 [ext_resource path="res://Images/Environment/tree.png" type="Texture" id=13]
 [ext_resource path="res://Scenes/Prefabs/EndGameScene.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scripts/GameScene/GameObserver.cs" type="Script" id=15]
-[ext_resource path="res://Music/fishing.mp3" type="AudioStream" id=16]
 [ext_resource path="res://Music/river.mp3" type="AudioStream" id=17]
 
 [sub_resource type="DynamicFont" id=5]
@@ -648,12 +647,6 @@ shape = SubResource( 9 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 80
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-pause_mode = 2
-stream = ExtResource( 16 )
-autoplay = true
-bus = "Music"
 
 [node name="River" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
